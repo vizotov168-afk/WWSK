@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Все теоремы геометрии за 7 класс</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f0f4f8; color: #1e2b3c; line-height: 1.6; }
+        
+        header { background: linear-gradient(135deg, #0b3b5c, #1a4d6e); color: white; padding: 2.5rem 1rem; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        
+        .nav-menu { background-color: #e8f0fe; padding: 1.5rem 1rem; border-bottom: 3px solid #1a4d6e; position: sticky; top: 0; z-index: 1000; }
+        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; max-width: 1200px; margin: 0 auto; }
+        .nav-links a { background: white; color: #0b3b5c; text-decoration: none; padding: 0.6rem 1.2rem; border-radius: 40px; font-weight: 600; border: 2px solid #1a4d6e; transition: 0.3s; font-size: 0.9rem; }
+        .nav-links a:hover { background: #1a4d6e; color: white; }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        .section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        .section-title { font-size: 1.8rem; color: #0b3b5c; border-left: 6px solid #1a4d6e; padding-left: 1rem; margin-bottom: 2rem; }
+        
+        .theorems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .theorem-card { background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #dce4ec; display: flex; flex-direction: column; }
+        .theorem-card:hover { transform: translateY(-3px); transition: 0.3s; box-shadow: 0 8px 25px rgba(0,0,0,0.1); }
+        
+        .theorem-name { font-size: 1.15rem; font-weight: 700; color: #0b3b5c; margin-bottom: 0.8rem; border-bottom: 1px solid #eef2f6; padding-bottom: 0.5rem; }
+        .theorem-text { font-size: 0.95rem; margin-bottom: 1rem; flex-grow: 1; }
+        .example { background: #f0f7ff; border-left: 4px solid #1a4d6e; padding: 0.6rem; border-radius: 8px; font-size: 0.85rem; margin-top: 10px; color: #01497c; }
+
+        .theorem-image { width: 100%; height: 180px; background: #fff; margin-top: 15px; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 5px; border: 1px solid #f0f0f0; }
+        .theorem-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+
+        footer { background: #0b3b5c; color: white; text-align: center; padding: 2rem; margin-top: 3rem; }
+        .back-to-top { position: fixed; bottom: 20px; right: 20px; background: #1a4d6e; color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; z-index: 100; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📐 Геометрия 7 класс</h1>
+    <p>Все 23 ключевые теоремы школьной программы</p>
+</header>
+
+<nav class="nav-menu">
+    <div class="nav-links">
+        <a href="#ugly">Углы</a>
+        <a href="#triangles">Треугольники</a>
+        <a href="#parallel">Параллельные</a>
+        <a href="#right">Прямоугольные</a>
+        <a href="#circle">Окружность</a>
+        <a href="#additional">Дополнительные</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section id="ugly" class="section">
+        <h2 class="section-title">📏 Углы и их свойства</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">1. Смежные углы</div>
+                <p class="theorem-text">Сумма смежных углов равна 180°.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Adjacent_Angles.svg/400px-Adjacent_Angles.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">2. Вертикальные углы</div>
+                <p class="theorem-text">Вертикальные углы равны.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Vertical_angles.svg/400px-Vertical_angles.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">3. Перпендикулярные прямые</div>
+                <p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Two_lines_perpendicular_to_a_third.svg/400px-Two_lines_perpendicular_to_a_third.svg.png"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="triangles" class="section">
+        <h2 class="section-title">🔺 Треугольники</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">4. I признак (СУС)</div>
+                <p class="theorem-text">По двум сторонам и углу между ними.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Triangle_Congruence_SAS.png/400px-Triangle_Congruence_SAS.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">5. II признак (УСУ)</div>
+                <p class="theorem-text">По стороне и двум прилежащим углам.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Triangle_Congruence_ASA.png/400px-Triangle_Congruence_ASA.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">6. III признак (ССС)</div>
+                <p class="theorem-text">По трем сторонам.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Triangle_Congruence_SSS.png/400px-Triangle_Congruence_SSS.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">7. Равнобедренный △</div>
+                <p class="theorem-text">Углы при основании равны.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Isosceles_triangle.svg/400px-Isosceles_triangle.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">8. Медиана, биссектриса, высота</div>
+                <p class="theorem-text">В равнобедренном треугольнике они совпадают, если проведены к основанию.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Triangle_altitude_bisector_median.svg/400px-Triangle_altitude_bisector_median.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">9. Неравенство треугольника</div>
+                <p class="theorem-text">Любая сторона меньше суммы двух других.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0e/Triangle_Inequality_Visual.svg/400px-Triangle_Inequality_Visual.svg.png"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="parallel" class="section">
+        <h2 class="section-title">🛤️ Параллельные прямые</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">10-12. Углы при параллельных</div>
+                <p class="theorem-text">Накрест лежащие равны, соответственные равны, сумма односторонних 180°.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Angle-pairs_transversal_parallel.svg/400px-Angle-pairs_transversal_parallel.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">13. Аксиома параллельных</div>
+                <p class="theorem-text">Через точку вне прямой проходит только одна параллельная ей прямая.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Playfair_axiom.svg/400px-Playfair_axiom.svg.png"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="right" class="section">
+        <h2 class="section-title">◤ Прямоугольный треугольник</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">15. Сумма острых углов</div>
+                <p class="theorem-text">В сумме дают 90°.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Right_triangle.svg/400px-Right_triangle.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">16. Катет против 30°</div>
+                <p class="theorem-text">Равен половине гипотенузы.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/30-60-90_triangle.svg/400px-30-60-90_triangle.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">17. Признак по гипотенузе и катету</div>
+                <p class="theorem-text">Если они равны, то и треугольники равны.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Triangle_Congruence_HL.png/400px-Triangle_Congruence_HL.png"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="circle" class="section">
+        <h2 class="section-title">⚪ Окружность</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">18. Касательная</div>
+                <p class="theorem-text">Перпендикулярна радиусу в точке касания.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Circle_tangent.svg/400px-Circle_tangent.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">19. Отрезки касательных</div>
+                <p class="theorem-text">Отрезки касательных из одной точки равны.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Tangents_to_a_circle_from_a_point.svg/400px-Tangents_to_a_circle_from_a_point.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">20. Вписанный угол</div>
+                <p class="theorem-text">Равен половине центрального (дуги).</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Inscribed_angle_theorem.svg/400px-Inscribed_angle_theorem.svg.png"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="additional" class="section">
+        <h2 class="section-title">📘 Дополнительные теоремы</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">21. Внешний угол</div>
+                <p class="theorem-text">Равен сумме двух внутренних, не смежных с ним.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Exterior_angle_theorem.svg/400px-Exterior_angle_theorem.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">22. Стороны и углы</div>
+                <p class="theorem-text">Против большей стороны лежит больший угол.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Triangle_sides_angles_relationship.svg/400px-Triangle_sides_angles_relationship.svg.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">23. Медиана гипотенузы</div>
+                <p class="theorem-text">В прямоугольном △ равна половине гипотенузы.</p>
+                <div class="theorem-image"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Right_triangle_median_to_hypotenuse.svg/400px-Right_triangle_median_to_hypotenuse.svg.png"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 Проект по Геометрии | GitHub Pages</p>
+</footer>
+
+<a href="#" class="back-to-top">↑</a>
+
+</body>
+</html>
