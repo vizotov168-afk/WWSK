@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+    <title>Все теоремы геометрии за 7 класс</title>
+    <style>
+        html { scroll-behavior: smooth; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, sans-serif; background-color: #f8fafc; color: #1e2b3c; line-height: 1.6; }
+        header { background: linear-gradient(135deg, #0b3b5c, #1a4d6e); color: white; padding: 2.5rem 1rem; text-align: center; }
+        .nav-menu { background-color: #e8f0fe; padding: 1rem; border-bottom: 3px solid #1a4d6e; position: sticky; top: 0; z-index: 1000; }
+        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; max-width: 1200px; margin: 0 auto; }
+        .nav-links a { background: white; color: #0b3b5c; text-decoration: none; padding: 0.5rem 1rem; border-radius: 40px; font-weight: 600; font-size: 0.85rem; border: 2px solid #1a4d6e; transition: 0.3s; }
+        .nav-links a:hover { background: #1a4d6e; color: white; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
+        .section { margin-bottom: 4rem; scroll-margin-top: 100px; }
+        .section-title { font-size: 1.8rem; color: #0b3b5c; border-left: 8px solid #1a4d6e; padding-left: 1rem; margin-bottom: 2rem; }
+        .theorems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 1.5rem; }
+        .theorem-card { background: white; border-radius: 20px; padding: 1.5rem; box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; display: flex; flex-direction: column; transition: 0.3s; }
+        .theorem-card:hover { transform: translateY(-5px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        .theorem-name { font-size: 1.1rem; font-weight: 700; color: #0b3b5c; margin-bottom: 0.8rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem; }
+        .theorem-text { font-size: 0.95rem; margin-bottom: 1rem; flex-grow: 1; }
+        .theorem-image { width: 100%; height: 180px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #f1f5f9; padding: 5px; }
+        .theorem-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        footer { background: #0b3b5c; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📐 Геометрия 7 класс</h1>
+    <p>Полный справочник: 23 теоремы с чертежами</p>
+</header>
+
+<nav class="nav-menu">
+    <div class="nav-links">
+        <a href="#ugly">Углы</a>
+        <a href="#triangles">Треугольники</a>
+        <a href="#parallel">Параллельные</a>
+        <a href="#right">Прямоугольные</a>
+        <a href="#circle">Окружность</a>
+        <a href="#extra">Доп. свойства</a>
+    </div>
+</nav>
+
+<main class="container">
+    <section id="ugly" class="section">
+        <h2 class="section-title">📏 Углы и их свойства</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">1. Смежные углы</div>
+                <p class="theorem-text">Сумма смежных углов равна 180°.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/17959277907527427665_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">2. Вертикальные углы</div>
+                <p class="theorem-text">Вертикальные углы всегда равны.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/1076929838967033615_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">3. Перпендикулярные прямые</div>
+                <p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/6706531934718943632_0"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="triangles" class="section">
+        <h2 class="section-title">🔺 Треугольники</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">4. I признак (СУС)</div>
+                <p class="theorem-text">По двум сторонам и углу между ними.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/17326486699784885676_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">5. II признак (УСУ)</div>
+                <p class="theorem-text">По стороне и двум прилежащим углам.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/12385552393736152562_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">6. III признак (ССС)</div>
+                <p class="theorem-text">По трем сторонам.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/7593720690420068626_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">7. Равнобедренный △</div>
+                <p class="theorem-text">Углы при основании равнобедренного треугольника равны.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/7157799815590998046_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">8. Биссектриса в р/б △</div>
+                <p class="theorem-text">Является также медианой и высотой.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/12564901031508282500_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">9. Неравенство △</div>
+                <p class="theorem-text">Каждая сторона меньше суммы двух других.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/765281160131776279_0"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="parallel" class="section">
+        <h2 class="section-title">🛤️ Параллельные прямые</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">10. Накрест лежащие</div>
+                <p class="theorem-text">Если накрест лежащие равны, прямые параллельны.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/13923457025702229788_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">11. Соответственные</div>
+                <p class="theorem-text">Если соответственные углы равны, прямые параллельны.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/11779412054873338572_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">12. Односторонние</div>
+                <p class="theorem-text">Если сумма односторонних 180°, прямые параллельны.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/9547187500398182188_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">13. Аксиома параллельных</div>
+                <p class="theorem-text">Через точку вне прямой проходит только одна параллельная.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/13176811149840329681_0"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="right" class="section">
+        <h2 class="section-title">◤ Прямоугольные треугольники</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">15. Сумма острых углов</div>
+                <p class="theorem-text">Всегда равна 90°.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/9463775418918428870_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">16. Свойство угла 30°</div>
+                <p class="theorem-text">Катет против угла 30° равен половине гипотензы.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/12319478344084226336_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">17. Признак по Г и К</div>
+                <p class="theorem-text">Равенство по гипотенузе и катету.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/12276159224707604822_0"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="circle" class="section">
+        <h2 class="section-title">⚪ Окружность</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">18. Касательная</div>
+                <p class="theorem-text">Перпендикулярна радиусу в точке касания.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/13911138453871140688_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">19. Отрезки касательных</div>
+                <p class="theorem-text">Равны между собой, если проведены из одной точки.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/14636395781409885275_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">20. Вписанный угол</div>
+                <p class="theorem-text">Равен половине дуги, на которую опирается.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/20306933956132231_0"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="extra" class="section">
+        <h2 class="section-title">📘 Дополнительно</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card">
+                <div class="theorem-name">21. Внешний угол</div>
+                <p class="theorem-text">Равен сумме двух внутренних углов, не смежных с ним.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/7865153735552746970_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">22. Стороны и углы</div>
+                <p class="theorem-text">В треугольнике против большей стороны лежит больший угол.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/11122216523766210313_0"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name">23. Медиана гипотенузы</div>
+                <p class="theorem-text">Равна половине гипотенузы в прямоугольном △.</p>
+                <div class="theorem-image"><img src="http://googleusercontent.com/image_collection/image_retrieval/4252716065920303999_0"></div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <p>© 2026 Проект по Геометрии | Все права защищены</p>
+</footer>
+
+</body>
+</html>
