@@ -19,7 +19,10 @@
         /* ТЁМНАЯ ТЕМА */
         body.dark-mode { background-color: #1a202c; color: #e2e8f0; }
         body.dark-mode .nav-menu { background-color: #2d3748; border-bottom-color: #4a5568; }
-        body.dark-mode .nav-links a { background: #1a202c; color: #63b3ed; border-color: #63b3ed; }
+        
+        /* Исправление: заголовки тем теперь белые в темной теме */
+        body.dark-mode .section-title { color: #ffffff; border-left-color: #63b3ed; }
+        
         body.dark-mode .theorem-card { background: #2d3748; border-color: #4a5568; color: #e2e8f0; }
         body.dark-mode .theorem-name { color: #63b3ed; border-bottom-color: #4a5568; }
         body.dark-mode footer { background: #000; }
@@ -32,42 +35,50 @@
             color: white; padding: 3rem 1rem; text-align: center; position: relative;
         }
 
-        /* КНОПКА ТЕМЫ С РЕВЕРСИВНОЙ АНИМАЦИЕЙ */
         .theme-toggle {
             position: absolute; top: 15px; right: 15px; z-index: 1001;
             width: 45px; height: 45px; border-radius: 12px;
             background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255,255,255,0.3); 
             cursor: pointer; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; 
-            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             backdrop-filter: blur(5px);
         }
-        /* Когда тема активна, кнопка крутится в одну сторону, когда нет — возвращается */
         body.dark-mode .theme-toggle { transform: rotate(360deg); }
-        .theme-toggle:hover { background: rgba(255, 255, 255, 0.4); }
 
         .nav-menu { background-color: #e8f0fe; padding: 1rem; border-bottom: 3px solid #1a4d6e; position: sticky; top: 0; z-index: 1000; transition: 0.4s; }
         .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; max-width: 1200px; margin: 0 auto; }
+        
+        /* АНИМАЦИЯ ЗАПОЛНЕНИЯ КНОПОК МЕНЮ */
         .nav-links a { 
+            position: relative;
             background: white; color: #0b3b5c; text-decoration: none; padding: 0.5rem 1.2rem; 
             border-radius: 40px; font-weight: 600; font-size: 0.85rem; border: 2px solid #1a4d6e; 
-            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            overflow: hidden; z-index: 1; transition: color 0.4s ease;
         }
-        .nav-links a:hover { background: #1a4d6e; color: white; transform: scale(1.1); }
+        .nav-links a::before {
+            content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+            background: #1a4d6e; transition: left 0.4s ease; z-index: -1;
+        }
+        .nav-links a:hover { color: white; }
+        .nav-links a:hover::before { left: 0; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 2rem 1rem; }
         .section { margin-bottom: 4rem; scroll-margin-top: 100px; }
-        .section-title { font-size: 1.8rem; color: #0b3b5c; border-left: 8px solid #1a4d6e; padding-left: 1rem; margin-bottom: 2rem; }
+        .section-title { font-size: 1.8rem; color: #0b3b5c; border-left: 8px solid #1a4d6e; padding-left: 1rem; margin-bottom: 2rem; transition: 0.4s; }
         
         .theorems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
 
+        /* ПОСТОЯННАЯ АНИМАЦИЯ КАРТОЧЕК (ПОЯВЛЕНИЕ И УХОД) */
         .theorem-card { 
             background: white; border-radius: 20px; padding: 1.5rem; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; 
             display: flex; flex-direction: column; 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; transform: translateY(30px);
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            opacity: 0; transform: scale(0.9) translateY(40px);
         }
-        .theorem-card.visible { opacity: 1; transform: translateY(0); }
+        /* Этот класс добавляется, когда карточка в экране, и убирается, когда она выходит */
+        .theorem-card.visible { opacity: 1; transform: scale(1) translateY(0); }
+
         .theorem-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: #63b3ed; }
 
         .theorem-name { font-size: 1.1rem; font-weight: 700; color: #0b3b5c; margin-bottom: 0.8rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem; }
@@ -86,9 +97,8 @@
         .captcha-box {
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
             padding: 2.5rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2);
-            text-align: center; color: white; animation: slideUp 0.8s ease;
+            text-align: center; color: white;
         }
-        @keyframes slideUp { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: translateY(0); } }
         #captcha-question { font-size: 2.5rem; font-weight: bold; color: #63b3ed; margin: 15px 0; }
         .captcha-input { padding: 12px; border-radius: 12px; border: none; width: 130px; text-align: center; font-size: 1.4rem; margin-bottom: 20px; }
         .btn-verify { padding: 12px 35px; background: #63b3ed; color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; }
@@ -193,14 +203,24 @@
     document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
     const overlay = document.getElementById('captcha-overlay'), btn = document.getElementById('themeBtn');
 
-    // АНИМАЦИЯ ПОЯВЛЕНИЯ
+    // УЛУЧШЕННАЯ АНИМАЦИЯ ПОЯВЛЕНИЯ (ПОСТОЯННАЯ)
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+        entries.forEach(entry => {
+            // Если карточка зашла в экран — добавляем видимость, если вышла — убираем
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            } else {
+                entry.target.classList.remove('visible');
+            }
+        });
     }, { threshold: 0.1 });
 
     function setTheme(mode) {
-        if (mode === 'dark') { document.body.classList.add('dark-mode'); btn.innerText = '☀️'; localStorage.setItem('theme', 'dark'); }
-        else { document.body.classList.remove('dark-mode'); btn.innerText = '🌙'; localStorage.setItem('theme', 'light'); }
+        if (mode === 'dark') { 
+            document.body.classList.add('dark-mode'); btn.innerText = '☀️'; localStorage.setItem('theme', 'dark'); 
+        } else { 
+            document.body.classList.remove('dark-mode'); btn.innerText = '🌙'; localStorage.setItem('theme', 'light'); 
+        }
     }
 
     window.onload = () => {
