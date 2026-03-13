@@ -29,31 +29,28 @@
 
         header { 
             background: linear-gradient(135deg, #0b3b5c, #1a4d6e); 
-            color: white; 
-            padding: 3rem 1rem; 
-            text-align: center; 
-            position: relative;
-            overflow: hidden;
+            color: white; padding: 3rem 1rem; text-align: center; position: relative;
         }
 
-        /* КНОПКА ТЕМЫ (СВЕРХУ СПРАВА) */
+        /* КНОПКА ТЕМЫ С РЕВЕРСИВНОЙ АНИМАЦИЕЙ */
         .theme-toggle {
             position: absolute; top: 15px; right: 15px; z-index: 1001;
             width: 45px; height: 45px; border-radius: 12px;
             background: rgba(255, 255, 255, 0.2); color: white; border: 1px solid rgba(255,255,255,0.3); 
             cursor: pointer; font-size: 1.3rem; display: flex; align-items: center; justify-content: center; 
-            transition: 0.3s; backdrop-filter: blur(5px);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s;
+            backdrop-filter: blur(5px);
         }
-        .theme-toggle:hover { background: rgba(255, 255, 255, 0.4); transform: rotate(15deg) scale(1.1); }
+        /* Когда тема активна, кнопка крутится в одну сторону, когда нет — возвращается */
+        body.dark-mode .theme-toggle { transform: rotate(360deg); }
+        .theme-toggle:hover { background: rgba(255, 255, 255, 0.4); }
 
         .nav-menu { background-color: #e8f0fe; padding: 1rem; border-bottom: 3px solid #1a4d6e; position: sticky; top: 0; z-index: 1000; transition: 0.4s; }
         .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; max-width: 1200px; margin: 0 auto; }
-        
-        /* АНИМАЦИЯ ССЫЛОК */
         .nav-links a { 
-            background: white; color: #0b3b5c; text-decoration: none; 
-            padding: 0.5rem 1.2rem; border-radius: 40px; font-weight: 600; 
-            font-size: 0.85rem; border: 2px solid #1a4d6e; transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
+            background: white; color: #0b3b5c; text-decoration: none; padding: 0.5rem 1.2rem; 
+            border-radius: 40px; font-weight: 600; font-size: 0.85rem; border: 2px solid #1a4d6e; 
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
         }
         .nav-links a:hover { background: #1a4d6e; color: white; transform: scale(1.1); }
 
@@ -63,33 +60,19 @@
         
         .theorems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2rem; }
 
-        /* АНИМАЦИЯ ПОЯВЛЕНИЯ КАРТОЧЕК */
         .theorem-card { 
             background: white; border-radius: 20px; padding: 1.5rem; 
             box-shadow: 0 5px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; 
             display: flex; flex-direction: column; 
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            opacity: 0; transform: translateY(30px); /* Начальное состояние для анимации */
+            opacity: 0; transform: translateY(30px);
         }
-
-        /* Класс, который будет добавляться при скролле через JS */
         .theorem-card.visible { opacity: 1; transform: translateY(0); }
-
-        .theorem-card:hover { 
-            transform: translateY(-10px) scale(1.02); 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12); 
-            border-color: #63b3ed;
-        }
+        .theorem-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); border-color: #63b3ed; }
 
         .theorem-name { font-size: 1.1rem; font-weight: 700; color: #0b3b5c; margin-bottom: 0.8rem; border-bottom: 1px dashed #cbd5e1; padding-bottom: 0.5rem; }
         .theorem-text { font-size: 0.95rem; margin-bottom: 1rem; flex-grow: 1; }
-        .theorem-image { 
-            width: 100%; height: 180px; background: #fff; border-radius: 12px; 
-            display: flex; align-items: center; justify-content: center; 
-            overflow: hidden; border: 1px solid #f1f5f9; padding: 5px;
-            transition: 0.3s;
-        }
-        .theorem-card:hover .theorem-image { transform: scale(1.03); }
+        .theorem-image { width: 100%; height: 180px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #f1f5f9; padding: 5px; }
         .theorem-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
         
         footer { background: #0b3b5c; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
@@ -103,13 +86,12 @@
         .captcha-box {
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
             padding: 2.5rem; border-radius: 30px; border: 1px solid rgba(255,255,255,0.2);
-            text-align: center; color: white; animation: slideUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+            text-align: center; color: white; animation: slideUp 0.8s ease;
         }
         @keyframes slideUp { from { opacity: 0; transform: translateY(100px); } to { opacity: 1; transform: translateY(0); } }
-        #captcha-question { font-size: 2.5rem; font-weight: bold; color: #63b3ed; margin: 15px 0; text-shadow: 0 0 20px rgba(99, 179, 237, 0.5); }
-        .captcha-input { padding: 12px; border-radius: 12px; border: none; width: 130px; text-align: center; font-size: 1.4rem; margin-bottom: 20px; background: rgba(255,255,255,0.9); }
-        .btn-verify { padding: 12px 35px; background: #63b3ed; color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 15px rgba(99, 179, 237, 0.4); }
-        .btn-verify:hover { background: #4299e1; transform: scale(1.1); }
+        #captcha-question { font-size: 2.5rem; font-weight: bold; color: #63b3ed; margin: 15px 0; }
+        .captcha-input { padding: 12px; border-radius: 12px; border: none; width: 130px; text-align: center; font-size: 1.4rem; margin-bottom: 20px; }
+        .btn-verify { padding: 12px 35px; background: #63b3ed; color: white; border: none; border-radius: 50px; font-weight: bold; cursor: pointer; transition: 0.3s; }
     </style>
 </head>
 <body>
@@ -117,7 +99,6 @@
 <div id="captcha-overlay">
     <div class="captcha-box">
         <h2>Докажи, что ты не бот 🤖</h2>
-        <p>Реши пример, чтобы открыть учебник:</p>
         <p id="captcha-question"></p>
         <input type="number" id="captcha-answer" class="captcha-input" placeholder="?">
         <br>
@@ -146,127 +127,96 @@
     <section id="ugly" class="section">
         <h2 class="section-title">📏 Углы и их свойства</h2>
         <div class="theorems-grid">
-            <div class="theorem-card">
-                <div class="theorem-name">1. Смежные углы</div>
-                <p class="theorem-text">Сумма смежных углов равна 180°.</p>
-                <div class="theorem-image"><img src="img/img1.jpeg"></div>
-            </div>
-            <div class="theorem-card">
-                <div class="theorem-name">2. Вертикальные углы</div>
-                <p class="theorem-text">Вертикальные углы всегда равны.</p>
-                <div class="theorem-image"><img src="img/img2.png"></div>
-            </div>
-            <div class="theorem-card">
-                <div class="theorem-name">3. Перпендикулярные прямые</div>
-                <p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p>
-                <div class="theorem-image"><img src="img/img3.png"></div>
-            </div>
+            <div class="theorem-card"><div class="theorem-name">1. Смежные углы</div><p class="theorem-text">Сумма смежных углов равна 180°.</p><div class="theorem-image"><img src="img/img1.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text">Вертикальные углы всегда равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные прямые</div><p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/img3.png"></div></div>
         </div>
     </section>
 
     <section id="triangles" class="section">
         <h2 class="section-title">🔺 Треугольники</h2>
         <div class="theorems-grid">
-            <div class="theorem-card">
-                <div class="theorem-name">4. I признак (СУС)</div>
-                <p class="theorem-text">По двум сторонам и углу между ними.</p>
-                <div class="theorem-image"><img src="img/img4.png"></div>
-            </div>
-            <div class="theorem-card">
-                <div class="theorem-name">5. II признак (УСУ)</div>
-                <p class="theorem-text">По стороне и двум прилежащим углам.</p>
-                <div class="theorem-image"><img src="img/img5.jpg"></div>
-            </div>
-            <div class="theorem-card">
-                <div class="theorem-name">6. III признак (ССС)</div>
-                <p class="theorem-text">По трем сторонам.</p>
-                <div class="theorem-image"><img src="img/img6.png"></div>
-            </div>
-            <div class="theorem-card">
-                <div class="theorem-name">7. Равнобедренный △</div>
-                <p class="theorem-text">Углы при основании равнобедренного треугольника равны.</p>
-                <div class="theorem-image"><img src="img/img7.webp"></div>
-            </div>
+            <div class="theorem-card"><div class="theorem-name">4. I признак (СУС)</div><p class="theorem-text">По двум сторонам и углу между ними.</p><div class="theorem-image"><img src="img/img4.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">5. II признак (УСУ)</div><p class="theorem-text">По стороне и двум прилежащим углам.</p><div class="theorem-image"><img src="img/img5.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">6. III признак (ССС)</div><p class="theorem-text">По трем сторонам.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">7. Равнобедренный △</div><p class="theorem-text">Углы при основании равнобедренного треугольника равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
+            <div class="theorem-card"><div class="theorem-name">8. Биссектриса в р/б △</div><p class="theorem-text">Является также медианой и высотой.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">9. Неравенство △</div><p class="theorem-text">Каждая сторона меньше суммы двух других.</p><div class="theorem-image"><img src="img/img9.png"></div></div>
+        </div>
+    </section>
+
+    <section id="parallel" class="section">
+        <h2 class="section-title">🛤️ Параллельные прямые</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text">Если накрест лежащие равны, прямые параллельны.</p><div class="theorem-image"><img src="img/10.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text">Если соответственные углы равны, прямые параллельны.</p><div class="theorem-image"><img src="img/11.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text">Если сумма односторонних 180°, прямые параллельны.</p><div class="theorem-image"><img src="img/12.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">13. Аксиома параллельных</div><p class="theorem-text">Через точку вне прямой проходит только одна параллельная.</p><div class="theorem-image"><img src="img/13.jpg"></div></div>
+        </div>
+    </section>
+
+    <section id="right" class="section">
+        <h2 class="section-title">◤ Прямоугольные треугольники</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card"><div class="theorem-name">15. Сумма острых углов</div><p class="theorem-text">Всегда равна 90°.</p><div class="theorem-image"><img src="img/15.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">16. Свойство угла 30°</div><p class="theorem-text">Катет против угла 30° равен половине гипотенузы.</p><div class="theorem-image"><img src="img/16.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">17. Признак по Г и К</div><p class="theorem-text">Равенство по гипотенузе и катету.</p><div class="theorem-image"><img src="img/17.jpg"></div></div>
+        </div>
+    </section>
+
+    <section id="circle" class="section">
+        <h2 class="section-title">⚪ Окружность</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card"><div class="theorem-name">18. Касательная</div><p class="theorem-text">Перпендикулярна радиусу в точке касания.</p><div class="theorem-image"><img src="img/18.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">19. Отрезки касательных</div><p class="theorem-text">Равны между собой, если проведены из одной точки.</p><div class="theorem-image"><img src="img/19.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">20. Вписанный угол</div><p class="theorem-text">Равен половине дуги, на которую опирается.</p><div class="theorem-image"><img src="img/20.jpg"></div></div>
+        </div>
+    </section>
+
+    <section id="extra" class="section">
+        <h2 class="section-title">📘 Дополнительно</h2>
+        <div class="theorems-grid">
+            <div class="theorem-card"><div class="theorem-name">21. Внешний угол</div><p class="theorem-text">Равен сумме двух внутренних углов, не смежных с ним.</p><div class="theorem-image"><img src="img/21.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">22. Стороны и углы</div><p class="theorem-text">В треугольнике против большей стороны лежит больший угол.</p><div class="theorem-image"><img src="img/22.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">23. Медиана гипотенузы</div><p class="theorem-text">Равна половине гипотенузы в прямоугольном △.</p><div class="theorem-image"><img src="img/23.jpg"></div></div>
         </div>
     </section>
 </main>
 
 <footer>
-    <p>Разработано: фурри WizotoW и пяточка Star kaimito 🦶</p>
+    <p>Сделали: WizotoW и Star kaimito 🦶</p>
 </footer>
 
 <script>
-    // 1. ЛОГИКА КАПЧИ
-    const n1 = Math.floor(Math.random() * 10) + 1;
-    const n2 = Math.floor(Math.random() * 10) + 1;
-    const sum = n1 + n2;
+    // ЛОГИКА КАПЧИ
+    const n1 = Math.floor(Math.random() * 10) + 1, n2 = Math.floor(Math.random() * 10) + 1, sum = n1 + n2;
     document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
-    const overlay = document.getElementById('captcha-overlay');
-    const btn = document.getElementById('themeBtn');
+    const overlay = document.getElementById('captcha-overlay'), btn = document.getElementById('themeBtn');
 
-    // 2. АНИМАЦИЯ ПРИ СКРОЛЛЕ (Intersection Observer)
-    const observerOptions = { threshold: 0.1 };
+    // АНИМАЦИЯ ПОЯВЛЕНИЯ
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, observerOptions);
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
 
-    // Применяем наблюдатель ко всем карточкам
-    function initAnimations() {
-        document.querySelectorAll('.theorem-card').forEach(card => {
-            observer.observe(card);
-        });
-    }
-
-    // 3. ТЕМА
     function setTheme(mode) {
-        if (mode === 'dark') {
-            document.body.classList.add('dark-mode');
-            btn.innerText = '☀️';
-            localStorage.setItem('theme', 'dark');
-        } else {
-            document.body.classList.remove('dark-mode');
-            btn.innerText = '🌙';
-            localStorage.setItem('theme', 'light');
-        }
+        if (mode === 'dark') { document.body.classList.add('dark-mode'); btn.innerText = '☀️'; localStorage.setItem('theme', 'dark'); }
+        else { document.body.classList.remove('dark-mode'); btn.innerText = '🌙'; localStorage.setItem('theme', 'light'); }
     }
 
     window.onload = () => {
-        const savedTheme = localStorage.getItem('theme');
-        const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme) setTheme(savedTheme);
-        else if (systemPrefersDark) setTheme('dark');
-
-        if (sessionStorage.getItem('isHuman') === 'true') {
-            overlay.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        } else {
-            document.body.classList.add('no-scroll');
-        }
-        
-        initAnimations(); // Запускаем анимации появления
+        const savedTheme = localStorage.getItem('theme'), systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme) setTheme(savedTheme); else if (systemPrefersDark) setTheme('dark');
+        if (sessionStorage.getItem('isHuman') === 'true') { overlay.style.display = 'none'; document.body.classList.remove('no-scroll'); }
+        document.querySelectorAll('.theorem-card').forEach(card => observer.observe(card));
     };
 
     function checkCaptcha() {
-        const val = document.getElementById('captcha-answer').value;
-        if (parseInt(val) === sum) {
-            sessionStorage.setItem('isHuman', 'true');
-            overlay.style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        } else {
-            alert("💀 Неверно! Попробуй еще раз.");
-            location.reload();
-        }
+        if (parseInt(document.getElementById('captcha-answer').value) === sum) {
+            sessionStorage.setItem('isHuman', 'true'); overlay.style.display = 'none'; document.body.classList.remove('no-scroll');
+        } else { alert("💀 Ошибка!"); location.reload(); }
     }
 
-    function toggleTheme() {
-        document.body.classList.contains('dark-mode') ? setTheme('light') : setTheme('dark');
-    }
+    function toggleTheme() { document.body.classList.contains('dark-mode') ? setTheme('light') : setTheme('dark'); }
 </script>
-
 </body>
 </html>
