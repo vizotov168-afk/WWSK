@@ -24,9 +24,81 @@
         .theorem-image { width: 100%; height: 180px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; overflow: hidden; border: 1px solid #f1f5f9; padding: 5px; }
         .theorem-image img { max-width: 100%; max-height: 100%; object-fit: contain; }
         footer { background: #0b3b5c; color: white; text-align: center; padding: 2rem; margin-top: 4rem; }
-    </style>
-</head>
-<body>
+    <style>
+    #captcha-overlay {
+        position: fixed;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        background: radial-gradient(circle, #1a4d6e 0%, #051926 100%);
+        z-index: 9999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-direction: column;
+        font-family: 'Segoe UI', sans-serif;
+    }
+
+    .captcha-box {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        padding: 2rem;
+        border-radius: 30px;
+        border: 2px solid #63b3ed;
+        text-align: center;
+        box-shadow: 0 0 20px rgba(99, 179, 237, 0.4);
+        max-width: 90%;
+    }
+
+    .captcha-box h2 { font-size: 2rem; margin-bottom: 10px; text-shadow: 2px 2px #000; }
+    
+    #captcha-question { 
+        font-size: 1.8rem; 
+        font-weight: bold; 
+        color: #63b3ed; 
+        margin: 15px 0;
+    }
+
+    .captcha-input {
+        padding: 12px;
+        border-radius: 15px;
+        border: none;
+        outline: none;
+        font-size: 1.2rem;
+        width: 150px;
+        text-align: center;
+        background: #f8fafc;
+        color: #0b3b5c;
+        margin-bottom: 20px;
+    }
+
+    .btn-verify {
+        display: block;
+        margin: 0 auto;
+        padding: 12px 30px;
+        background: #63b3ed;
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s;
+        box-shadow: 0 4px 15px rgba(99, 179, 237, 0.5);
+    }
+
+    .btn-verify:hover { transform: scale(1.05); background: #4299e1; }
+</style>
+
+<div id="captcha-overlay">
+    <div class="captcha-box">
+        <h2>Чел, ты бот? 🤨</h2>
+        <p>Докажи, что ты реальный чел и шаришь за цифры:</p>
+        <p id="captcha-question"></p>
+        <input type="number" id="captcha-answer" class="captcha-input" placeholder="Чо там?">
+        <button onclick="checkCaptcha()" class="btn-verify">Погнали! 🚀</button>
+    </div>
+</div>
 
 <header>
     <h1>📐 Геометрия 7 класс</h1>
@@ -199,5 +271,24 @@
 </body>
 </html>
 
+<script>
+    const n1 = Math.floor(Math.random() * 10) + 1;
+    const n2 = Math.floor(Math.random() * 10) + 1;
+    const realSum = n1 + n2;
+    document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
 
+    function checkCaptcha() {
+        const val = document.getElementById('captcha-answer').value;
+        if (parseInt(val) === realSum) {
+            sessionStorage.setItem('isHuman', 'true');
+            document.getElementById('captcha-overlay').style.display = 'none';
+        } else {
+            alert("Кринж! Давай по новой, ты явно не в духе 💀");
+        }
+    }
 
+    // Проверка при загрузке: если уже заходил, не мучаем чела
+    if (sessionStorage.getItem('isHuman') === 'true') {
+        document.getElementById('captcha-overlay').style.display = 'none';
+    }
+</script>
