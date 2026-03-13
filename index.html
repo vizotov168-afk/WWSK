@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Геометрия 7 — Mega Drum 3D Edition</title>
+    <title>Геометрия 7 — Ultra Drum 3D</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
@@ -11,15 +11,16 @@
         
         body { 
             font-family: 'Poppins', sans-serif;
+            /* Яркий переход от сиреневого к зелёному */
             background: linear-gradient(135deg, #f7b7ff 0%, #8ec5fc 50%, #b2ffda 100%);
             background-attachment: fixed;
             color: #0f172a; 
             overflow-x: hidden;
             min-height: 100vh;
-            transition: background 0.5s ease;
+            transition: all 0.5s ease;
         }
 
-        /* ТУРБО-РЕЖИМ (Пасхалка) */
+        /* ПАСХАЛКА: ТУРБО-РЕЖИМ */
         body.turbo-mode {
             background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
             background-size: 400% 400%;
@@ -36,7 +37,8 @@
             background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
-        header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; user-select: none; }
+        header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; user-select: none; transition: 0.3s; }
+        header h1:active { transform: scale(0.9); }
 
         .nav-menu { 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
@@ -49,6 +51,7 @@
             padding: 0.6rem 1.2rem; border-radius: 15px; background: rgba(255, 255, 255, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.6); transition: 0.3s;
         }
+        .nav-links a:active { transform: scale(0.9); background: #fff; }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; perspective: 1500px; }
         .section-title { font-size: 2.5rem; font-weight: 900; margin: 4rem 0 2.5rem; border-left: 12px solid #4a90e2; padding-left: 1.5rem; }
@@ -60,21 +63,27 @@
             transform-style: preserve-3d;
         }
 
-        /* 3D КАРТОЧКА БАРАБАНА */
+        /* 3D КАРТОЧКА С АНИМАЦИЕЙ НАЖАТИЯ */
         .theorem-card { 
-            background: rgba(255, 255, 255, 0.4); 
+            background: rgba(255, 255, 255, 0.35); 
             backdrop-filter: blur(20px) saturate(180%);
             border-radius: 35px; padding: 2.5rem; 
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.1);
             opacity: 0;
             transform-style: preserve-3d;
             transform: rotateX(85deg) translateZ(-300px) translateY(100px);
-            transition: all 0.9s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease, background 0.3s ease;
             backface-visibility: hidden;
+            cursor: pointer;
         }
 
-        body.turbo-mode .theorem-card { transition: all 0.4s ease-out; }
+        /* Эффект при клике на блок */
+        .theorem-card:active {
+            transform: scale(0.94) rotateX(5deg) !important;
+            background: rgba(255, 255, 255, 0.6);
+            transition: 0.1s;
+        }
 
         .theorem-card.visible { 
             opacity: 1; 
@@ -86,25 +95,41 @@
             transform: rotateX(-85deg) translateZ(-300px) translateY(-100px);
         }
 
-        .theorem-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; color: #4a90e2; }
+        /* АНИМАЦИЯ ЗАГОЛОВКОВ */
+        .theorem-name { 
+            font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; 
+            color: #4a90e2; transition: all 0.3s ease;
+            display: inline-block;
+        }
+        .theorem-card:active .theorem-name { color: #ff00ff; transform: translateX(10px); }
+
+        /* Неоновая пульсация в Турбо-режиме */
+        body.turbo-mode .theorem-name {
+            animation: neonPulse 1s infinite alternate;
+        }
+        @keyframes neonPulse {
+            from { text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff; color: #fff; }
+            to { text-shadow: 0 0 10px #fff, 0 0 20px #00ffff; color: #fff; }
+        }
+
         .theorem-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; }
         .theorem-image { 
-            width: 100%; height: 200px; background: rgba(255,255,255,0.5); 
+            width: 100%; height: 200px; background: rgba(255,255,255,0.4); 
             border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.8);
+            border: 1px solid rgba(255,255,255,0.6);
         }
-        .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; pointer-events: none; }
 
         /* КАПЧА */
         #captcha-overlay {
             position: fixed; inset: 0; z-index: 10000; background: rgba(255,255,255,0.4); backdrop-filter: blur(30px);
-            display: flex; align-items: center; justify-content: center;
+            display: flex; align-items: center; justify-content: center; transition: 0.5s;
         }
-        .captcha-box { background: #fff; padding: 4rem; border-radius: 50px; text-align: center; box-shadow: 0 40px 80px rgba(0,0,0,0.1); }
-        .captcha-input { padding: 15px; width: 120px; border: 3px solid #4a90e2; border-radius: 20px; font-size: 2rem; text-align: center; margin: 20px 0; font-weight: 900; }
-        .btn-verify { padding: 15px 40px; background: #4a90e2; color: #fff; border: none; border-radius: 30px; font-weight: 800; cursor: pointer; }
+        .captcha-box { background: #fff; padding: 3rem; border-radius: 50px; text-align: center; box-shadow: 0 40px 80px rgba(0,0,0,0.1); width: 90%; max-width: 400px; }
+        .captcha-input { padding: 10px; width: 100%; border: 3px solid #4a90e2; border-radius: 20px; font-size: 2rem; text-align: center; margin: 20px 0; font-weight: 900; }
+        .btn-verify { width: 100%; padding: 15px; background: #4a90e2; color: #fff; border: none; border-radius: 25px; font-weight: 800; cursor: pointer; font-size: 1.1rem; }
 
-        footer { padding: 4rem; text-align: center; font-weight: 900; opacity: 0.4; margin-top: 5rem; }
+        footer { padding: 4rem; text-align: center; font-weight: 900; opacity: 0.4; }
         body.no-scroll { overflow: hidden; }
     </style>
 </head>
@@ -113,16 +138,15 @@
 <div id="captcha-overlay">
     <div class="captcha-box">
         <h2 style="font-weight: 900;">Геометрия 7 класс 📐</h2>
-        <p id="captcha-question" style="font-size: 3rem; font-weight: 900; color: #4a90e2;"></p>
-        <input type="number" id="captcha-answer" class="captcha-input">
-        <br>
+        <p id="captcha-question" style="font-size: 2.5rem; font-weight: 900; color: #4a90e2; margin: 10px 0;"></p>
+        <input type="number" id="captcha-answer" class="captcha-input" placeholder="?">
         <button onclick="checkCaptcha()" class="btn-verify">Крутить барабан!</button>
     </div>
 </div>
 
 <header>
     <h1 id="main-title">Справочник Теорем</h1>
-    <p>3D Lottery Drum Edition</p>
+    <p>3D Turbo Drum Edition</p>
 </header>
 
 <nav class="nav-menu">
@@ -141,7 +165,7 @@
         <h2 class="section-title">Углы</h2>
         <div class="theorems-grid">
             <div class="theorem-card"><div class="theorem-name">1. Смежные углы</div><p class="theorem-text">Сумма смежных углов равна 180°.</p><div class="theorem-image"><img src="img/img1.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text">Вертикальные углы равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text">Вертикальные углы всегда равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
             <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные</div><p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/img3.png"></div></div>
         </div>
     </section>
@@ -151,30 +175,30 @@
         <div class="theorems-grid">
             <div class="theorem-card"><div class="theorem-name">4. I признак (СУС)</div><p class="theorem-text">По двум сторонам и углу между ними.</p><div class="theorem-image"><img src="img/img4.png"></div></div>
             <div class="theorem-card"><div class="theorem-name">5. II признак (УСУ)</div><p class="theorem-text">По стороне и двум прилежащим углам.</p><div class="theorem-image"><img src="img/img5.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">6. III признак (ССС)</div><p class="theorem-text">По трём сторонам.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">7. Углы в р/б △</div><p class="theorem-text">В равнобедренном треугольнике углы при основании равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name">8. Свойства биссектрисы</div><p class="theorem-text">В р/б треугольнике — медиана и высота.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">9. Неравенство △</div><p class="theorem-text">Каждая сторона меньше суммы двух других сторон.</p><div class="theorem-image"><img src="img/img9.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">6. III признак (ССС)</div><p class="theorem-text">По трём равным сторонам.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">7. Углы в р/б △</div><p class="theorem-text">Углы при основании равнобедренного треугольника равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
+            <div class="theorem-card"><div class="theorem-name">8. Биссектриса в р/б △</div><p class="theorem-text">Является медианой и высотой.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">9. Неравенство △</div><p class="theorem-text">Сумма двух любых сторон всегда больше третьей.</p><div class="theorem-image"><img src="img/img9.png"></div></div>
         </div>
     </section>
 
     <section id="sec3">
         <h2 class="section-title">Параллельные прямые</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text">Если накрест лежащие углы равны, то прямые параллельны.</p><div class="theorem-image"><img src="img/10.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text">Если соответственные углы равны, то прямые параллельны.</p><div class="theorem-image"><img src="img/11.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text">Сумма односторонних углов равна 180°.</p><div class="theorem-image"><img src="img/12.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">13. Аксиома параллельных</div><p class="theorem-text">Через точку проходит одна параллельная прямая.</p><div class="theorem-image"><img src="img/13.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">14. Сумма углов △</div><p class="theorem-text">Сумма всех углов треугольника равна 180°.</p><div class="theorem-image"><img src="img/14.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text">Если равны — прямые параллельны.</p><div class="theorem-image"><img src="img/10.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text">Если равны — прямые параллельны.</p><div class="theorem-image"><img src="img/11.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text">Если сумма 180° — прямые параллельны.</p><div class="theorem-image"><img src="img/12.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">13. Аксиома</div><p class="theorem-text">Через точку вне прямой проходит одна параллельная ей.</p><div class="theorem-image"><img src="img/13.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">14. Сумма углов △</div><p class="theorem-text">Всегда равна 180°.</p><div class="theorem-image"><img src="img/14.jpg"></div></div>
         </div>
     </section>
 
     <section id="sec4">
         <h2 class="section-title">Прямоугольные △</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">15. Сумма острых углов</div><p class="theorem-text">В прямоугольном треугольнике равна 90°.</p><div class="theorem-image"><img src="img/15.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">15. Сумма острых</div><p class="theorem-text">В прямоугольном треугольнике равна 90°.</p><div class="theorem-image"><img src="img/15.jpg"></div></div>
             <div class="theorem-card"><div class="theorem-name">16. Катет против 30°</div><p class="theorem-text">Равен половине гипотенузы.</p><div class="theorem-image"><img src="img/16.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">17. Признак по Г и К</div><p class="theorem-text">Равенство по гипотенузе и катету.</p><div class="theorem-image"><img src="img/17.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">17. Признак Г и К</div><p class="theorem-text">Равенство по гипотенузе и катету.</p><div class="theorem-image"><img src="img/17.jpg"></div></div>
         </div>
     </section>
 
@@ -190,19 +214,19 @@
     <section id="sec6">
         <h2 class="section-title">Дополнительно</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">21. Внешний угол △</div><p class="theorem-text">Равен сумме двух углов, не смежных с ним.</p><div class="theorem-image"><img src="img/21.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">22. Соотношения сторон</div><p class="theorem-text">Против большего угла лежит большая сторона.</p><div class="theorem-image"><img src="img/22.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">23. Медиана гипотенузы</div><p class="theorem-text">В прямоугольном △ равна половине гипотенузы.</p><div class="theorem-image"><img src="img/23.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">21. Внешний угол</div><p class="theorem-text">Равен сумме двух углов, не смежных с ним.</p><div class="theorem-image"><img src="img/21.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">22. Соотношение</div><p class="theorem-text">Против большего угла лежит большая сторона.</p><div class="theorem-image"><img src="img/22.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">23. Медиана гипотенузы</div><p class="theorem-text">В прямоугольном треугольнике равна её половине.</p><div class="theorem-image"><img src="img/23.jpg"></div></div>
         </div>
     </section>
 </main>
 
 <footer>
-    <p>Handcrafted by WizotoW & Star kaimito ⚡</p>
+    <p>Created by WizotoW & Star kaimito ⚡</p>
 </footer>
 
 <script>
-    // Вибрация для Tecno
+    // Вибрация
     function haptic(ms = 20) { if (window.navigator.vibrate) window.navigator.vibrate(ms); }
 
     // Капча
@@ -219,11 +243,12 @@
             }, 500);
         } else {
             haptic([50, 30, 50]);
-            alert("Попробуй еще раз!");
+            alert("Ошибка! Барабан не крутится.");
+            location.reload();
         }
     }
 
-    // Логика вращения барабана
+    // Барабан
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -240,9 +265,13 @@
         });
     }, { threshold: 0.1 });
 
-    document.querySelectorAll('.theorem-card').forEach(card => observer.observe(card));
+    document.querySelectorAll('.theorem-card').forEach(card => {
+        observer.observe(card);
+        // Добавляем вибро на клик
+        card.addEventListener('click', () => haptic(15));
+    });
 
-    // Пасхалка: Турбо-режим
+    // Пасхалка
     let clicks = 0;
     document.getElementById('main-title').addEventListener('click', () => {
         clicks++;
@@ -252,11 +281,11 @@
             haptic([100, 50, 100, 50, 200]);
             clicks = 0;
             const isTurbo = document.body.classList.contains('turbo-mode');
-            alert(isTurbo ? "TURBO MODE ACTIVATED! ⚡" : "Turbo Mode Disabled");
+            if(isTurbo) alert("TURBO MODE ACTIVATED! ⚡");
         }
     });
 
-    // Вибрация при навигации
+    // Вибро на меню
     document.querySelectorAll('.nav-links a').forEach(a => {
         a.addEventListener('click', () => haptic(10));
     });
