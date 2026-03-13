@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Геометрия 7 класс — Pure Liquid Glass</title>
+    <title>Геометрия 7 класс — Aero Drum Glass</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         /* БАЗОВЫЕ НАСТРОЙКИ */
@@ -18,100 +18,106 @@
         
         body { 
             font-family: 'Poppins', sans-serif;
-            /* Твои идеальные цвета светлой темы */
-            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            /* ЯРКИЙ ПЛАВНЫЙ ГРАДИЕНТ (Сиреневый -> Голубой/Зелёный) */
+            background: linear-gradient(135deg, #f9d9ff 0%, #c0e1ff 50%, #d8fff0 100%);
             color: #0f172a; 
             line-height: 1.6; 
             overflow-x: hidden;
             min-height: 100vh;
+            /*perspective: 1500px;*/ /* Необязательно, если перспектива на контейнере */
         }
 
         /* АНИМИРОВАННЫЙ ФОН (БЛОБЫ) */
         .bg-blob {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(100px);
-            z-index: -1;
-            opacity: 0.6;
+            position: fixed; border-radius: 50%; filter: blur(100px); z-index: -1; opacity: 0.7;
             animation: blobfloat 20s infinite alternate;
         }
-        .blob-1 { top: 10%; left: -10%; width: 500px; height: 500px; background: #ff9a9e; }
-        .blob-2 { bottom: 10%; right: -5%; width: 450px; height: 450px; background: #fecfef; animation-delay: -7s; }
-        .blob-3 { top: 40%; right: 20%; width: 300px; height: 300px; background: #a1c4fd; animation-delay: -3s; }
+        .blob-1 { top: 10%; left: -10%; width: 500px; height: 500px; background: #ffc2f5; }
+        .blob-2 { bottom: 10%; right: -5%; width: 450px; height: 450px; background: #ffffd1; animation-delay: -7s; }
+        .blob-3 { top: 40%; right: 20%; width: 300px; height: 300px; background: #c2fffd; animation-delay: -3s; }
 
         @keyframes blobfloat {
             0% { transform: translate(0, 0) scale(1); }
             100% { transform: translate(80px, 40px) scale(1.2); }
         }
 
-        /* ШАПКА */
+        /* ШАПКА И МЕНЮ */
         header { 
-            padding: 5rem 1rem; 
-            text-align: center; 
-            position: relative;
-            background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(15px);
+            padding: 6rem 1rem; text-align: center; position: relative;
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
-        header h1 { font-weight: 900; font-size: 2.5rem; letter-spacing: -1px; }
+        header h1 { font-weight: 900; font-size: 2.8rem; letter-spacing: -1px; }
 
-        /* МЕНЮ */
         .nav-menu { 
-            background: rgba(255, 255, 255, 0.4); 
-            backdrop-filter: blur(20px);
-            padding: 1.2rem; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4); 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px);
+            padding: 1.2rem; border-bottom: 1px solid rgba(255, 255, 255, 0.4); 
+            position: sticky; top: 0; z-index: 1000; 
         }
         .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; max-width: 1200px; margin: 0 auto; }
         .nav-links a { 
-            text-decoration: none; 
-            color: #0f172a; 
-            font-weight: 700; 
-            font-size: 0.85rem;
-            padding: 0.6rem 1.2rem; 
-            border-radius: 15px; 
-            background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.6); 
-            transition: 0.3s;
+            text-decoration: none; color: #0f172a; font-weight: 700; font-size: 0.85rem;
+            padding: 0.6rem 1.2rem; border-radius: 15px; background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.6); transition: 0.3s;
         }
         .nav-links a:hover { transform: translateY(-3px); background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 
-        /* КАРТОЧКИ ТЕОРЕМ (LIQUID GLASS) */
-        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 1.5rem; }
-        .section { margin-bottom: 6rem; scroll-margin-top: 120px; }
-        .section-title { font-size: 2.2rem; font-weight: 900; margin-bottom: 2.5rem; border-left: 10px solid #4a90e2; padding-left: 1.5rem; }
+        /* КОНТЕЙНЕР И СЕТКА ТЕОРЕМ */
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; }
+        .section { margin-bottom: 8rem; scroll-margin-top: 120px; }
+        .section-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 3rem; border-left: 12px solid #4a90e2; padding-left: 1.5rem; }
         
-        .theorems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 2.5rem; }
+        .theorems-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 3rem; 
+            perspective: 2000px; /* Глубина для эффекта барабана */
+        }
 
+        /* КАРТОЧКИ ТЕОРЕМ: НОВАЯ АНИМАЦИЯ «БАРАБАН» */
         .theorem-card { 
             background: rgba(255, 255, 255, 0.4); 
             backdrop-filter: blur(15px) saturate(160%);
             -webkit-backdrop-filter: blur(15px) saturate(160%);
-            border-radius: 30px; 
-            padding: 2rem; 
+            border-radius: 30px; padding: 2rem; 
             border: 1px solid rgba(255, 255, 255, 0.8);
             box-shadow: 0 10px 30px rgba(31, 38, 135, 0.05);
-            transition: all 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex; flex-direction: column; 
+            
+            /* НОВЫЕ ТРАНСФОРМАЦИИ ДЛЯ 3D */
             opacity: 0; 
-            transform: translateY(40px) scale(0.95);
+            transform-origin: center center; /* Точка вращения */
+            transform: rotateX(70deg) translateY(100px) translateZ(-100px); /* Поворот и отступ назад */
+            
+            /* Плавность трансформации  */
+            transition: 
+                transform 1s cubic-bezier(0.19, 1, 0.22, 1), /* Инерция, как у барабана */
+                opacity 0.8s ease;
+            
+            backface-visibility: hidden; /* Скрываем заднюю сторону при повороте */
         }
-        .theorem-card.visible { opacity: 1; transform: translateY(0) scale(1); }
+
+        /* СОСТОЯНИЕ, КОГДА КАРТОЧКА НА ЭКРАНЕ */
+        .theorem-card.visible { 
+            opacity: 1; 
+            transform: rotateX(0deg) translateY(0) translateZ(0); /* Возвращение в нормальное положение */
+        }
+
+        /* СОСТОЯНИЕ ПРИ СКРОЛЛЕ ВВЕРХ (уход за верх экрана) */
+        .theorem-card.exit-up { 
+            opacity: 0; 
+            transform: rotateX(-70deg) translateY(-100px) translateZ(-100px); /* Поворот вверх */
+        }
+
         .theorem-card:hover { transform: translateY(-10px); background: rgba(255, 255, 255, 0.6); box-shadow: 0 20px 40px rgba(31, 38, 135, 0.12); }
         
-        .theorem-name { font-size: 1.3rem; font-weight: 800; margin-bottom: 1rem; color: #4a90e2; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 0.8rem; }
-        .theorem-text { font-size: 1rem; font-weight: 600; margin-bottom: 1.5rem; opacity: 0.9; }
+        .theorem-name { font-size: 1.4rem; font-weight: 800; margin-bottom: 1.2rem; color: #4a90e2; border-bottom: 2px solid rgba(0,0,0,0.05); padding-bottom: 0.8rem; }
+        .theorem-text { font-size: 1.05rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; flex-grow: 1; }
         .theorem-image { 
-            width: 100%; 
-            height: 200px; 
+            width: 100%; height: 220px; 
             background: rgba(255,255,255,0.6); 
             border-radius: 20px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            overflow: hidden; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden; 
             border: 1px solid rgba(255,255,255,0.8); 
         }
         .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; }
@@ -119,7 +125,7 @@
         /* КАПЧА */
         #captcha-overlay {
             position: fixed; inset: 0; z-index: 10000;
-            background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(20px);
+            background: rgba(255, 255, 255, 0.3); backdrop-filter: blur(25px);
             display: flex; align-items: center; justify-content: center; transition: 0.5s;
         }
         .captcha-box {
@@ -128,11 +134,11 @@
             text-align: center; box-shadow: 0 30px 60px rgba(0,0,0,0.1);
         }
         #captcha-question { font-size: 3.5rem; font-weight: 900; margin: 20px 0; color: #4a90e2; }
-        .captcha-input { padding: 15px; border-radius: 20px; border: 1px solid #4a90e2; background: #fff; color: #0f172a; width: 140px; text-align: center; font-size: 2rem; margin-bottom: 30px; font-weight: 800; }
+        .captcha-input { padding: 15px; border-radius: 20px; border: 2px solid #4a90e2; background: #fff; color: #0f172a; width: 140px; text-align: center; font-size: 2rem; margin-bottom: 30px; font-weight: 800; }
         .btn-verify { padding: 18px 60px; background: #4a90e2; border: none; color: #fff; border-radius: 50px; font-weight: 800; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
         .btn-verify:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(74, 144, 226, 0.3); }
 
-        footer { padding: 4rem; text-align: center; font-weight: 800; opacity: 0.5; margin-top: 5rem; }
+        footer { padding: 4rem; text-align: center; font-weight: 800; opacity: 0.5; margin-top: 6rem; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
         body.no-scroll { overflow: hidden; height: 100vh; }
     </style>
 </head>
@@ -148,20 +154,20 @@
         <p id="captcha-question"></p>
         <input type="number" id="captcha-answer" class="captcha-input" placeholder="?">
         <br>
-        <button onclick="checkCaptcha()" class="btn-verify">Войти</button>
+        <button onclick="checkCaptcha()" class="btn-verify">Открыть справочник</button>
     </div>
 </div>
 
 <header>
     <h1>Справочник по Геометрии</h1>
-    <p style="font-weight: 600; opacity: 0.7;">Pure Liquid Glass Edition</p>
+    <p style="font-weight: 600; opacity: 0.7;">Pure Aero Drum Edition</p>
 </header>
 
 <nav class="nav-menu">
     <div class="nav-links">
         <a href="#ugly">Углы</a>
         <a href="#triangles">Треугольники</a>
-        <a href="#parallel">Параллельные</a>
+        <a href="#parallel">Параллели</a>
         <a href="#right">Прямоугольные</a>
         <a href="#circle">Окружность</a>
         <a href="#extra">Дополнительно</a>
@@ -173,8 +179,8 @@
         <h2 class="section-title">Углы и их свойства</h2>
         <div class="theorems-grid">
             <div class="theorem-card"><div class="theorem-name">1. Смежные углы</div><p class="theorem-text">Сумма смежных углов равна 180°.</p><div class="theorem-image"><img src="img/img1.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text">Вертикальные углы равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные прямые</div><p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/img3.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text">Вертикальные углы равны между собой.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные</div><p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/img3.png"></div></div>
         </div>
     </section>
 
@@ -196,13 +202,13 @@
             <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text">Если накрест лежащие углы равны, прямые параллельны.</p><div class="theorem-image"><img src="img/10.jpg"></div></div>
             <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text">Если соответственные углы равны, прямые параллельны.</p><div class="theorem-image"><img src="img/11.jpg"></div></div>
             <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text">Если сумма односторонних углов равна 180°, прямые параллельны.</p><div class="theorem-image"><img src="img/12.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">13. Аксиома параллельных</div><p class="theorem-text">Через точку вне прямой проходит только одна параллельная ей прямая.</p><div class="theorem-image"><img src="img/13.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">13. Аксиома параллельных</div><p class="theorem-text">Через точку вне прямой проходит одна параллельная ей прямая.</p><div class="theorem-image"><img src="img/13.jpg"></div></div>
             <div class="theorem-card"><div class="theorem-name">14. Сумма углов △</div><p class="theorem-text">Сумма всех углов любого треугольника равна 180°.</p><div class="theorem-image"><img src="img/14.jpg"></div></div>
         </div>
     </section>
 
     <section id="right" class="section">
-        <h2 class="section-title">Прямоугольные треугольники</h2>
+        <h2 class="section-title">Прямоугольные △</h2>
         <div class="theorems-grid">
             <div class="theorem-card"><div class="theorem-name">15. Сумма острых углов</div><p class="theorem-text">В прямоугольном треугольнике она всегда равна 90°.</p><div class="theorem-image"><img src="img/15.jpg"></div></div>
             <div class="theorem-card"><div class="theorem-name">16. Катет против 30°</div><p class="theorem-text">Равен половине гипотенузы.</p><div class="theorem-image"><img src="img/16.jpg"></div></div>
@@ -215,7 +221,7 @@
         <div class="theorems-grid">
             <div class="theorem-card"><div class="theorem-name">18. Касательная</div><p class="theorem-text">Перпендикулярна радиусу в точке касания.</p><div class="theorem-image"><img src="img/18.jpg"></div></div>
             <div class="theorem-card"><div class="theorem-name">19. Отрезки касательных</div><p class="theorem-text">Равны, если проведены из одной точки.</p><div class="theorem-image"><img src="img/19.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">20. Диаметр и хорда</div><p class="theorem-text">Диаметр, перпендикулярный хорде, делит её пополам.</p><div class="theorem-image"><img src="img/20.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">20. Диаметр и хорда</div><p class="theorem-text">⊥ диаметр делит хорду пополам.</p><div class="theorem-image"><img src="img/20.jpg"></div></div>
         </div>
     </section>
 
@@ -230,7 +236,7 @@
 </main>
 
 <footer>
-    <p>Проект разработан: WizotoW и Star kaimito ⚡</p>
+    <p>Создано: WizotoW и Star kaimito ⚡🦶</p>
 </footer>
 
 <script>
@@ -247,7 +253,8 @@
 
     function checkCaptcha() {
         haptic(30);
-        if (parseInt(document.getElementById('captcha-answer').value) === sum) {
+        const ans = document.getElementById('captcha-answer').value;
+        if (parseInt(ans) === sum) {
             sessionStorage.setItem('isHuman', 'true');
             document.getElementById('captcha-overlay').style.opacity = '0';
             setTimeout(() => {
@@ -261,23 +268,43 @@
         }
     }
 
-    // АНИМАЦИЯ ПРИ СКРОЛЛЕ
+    // УЛУЧШЕННАЯ АНИМАЦИЯ «БАРАБАН» ПРИ СКРОЛЛЕ
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1 // Процент видимости карточки
+    };
+
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
+                // Карточка появляется (вращается к нам)
                 entry.target.classList.add('visible');
+                entry.target.classList.remove('exit-up');
             } else {
-                entry.target.classList.remove('visible'); 
+                // Карточка исчезает
+                if (entry.boundingClientRect.top < 0) {
+                    // Уходит вверх (вращается вверх)
+                    entry.target.classList.add('exit-up');
+                    entry.target.classList.remove('visible');
+                } else {
+                    // Уходит вниз (вращается вниз за экран)
+                    entry.target.classList.remove('visible', 'exit-up');
+                }
             }
         });
-    }, { threshold: 0.1 });
+    }, observerOptions);
 
     window.onload = () => {
         if (sessionStorage.getItem('isHuman') === 'true') {
             document.getElementById('captcha-overlay').style.display = 'none';
             document.body.classList.remove('no-scroll');
         }
-        document.querySelectorAll('.theorem-card').forEach(card => observer.observe(card));
+        
+        // Включаем наблюдение за каждой карточкой
+        document.querySelectorAll('.theorem-card').forEach(card => {
+            observer.observe(card);
+        });
         
         // Вибрация при кликах по меню
         document.querySelectorAll('.nav-links a').forEach(a => {
