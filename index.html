@@ -19,7 +19,7 @@
             transition: all 0.5s ease;
         }
 
-        /* ПАСХАЛКА: ТУРБО-РЕЖИМ */
+        /* ТУРБО-РЕЖИМ */
         body.turbo-mode {
             background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
             background-size: 400% 400%;
@@ -39,7 +39,6 @@
         header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; user-select: none; transition: 0.3s; }
         header h1:active { transform: scale(0.9); }
 
-        /* МЕНЮ: Теперь НЕ прилипает (намертво на своём месте) */
         .nav-menu { 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
             padding: 1.2rem; position: relative; z-index: 1000; 
@@ -51,19 +50,17 @@
             padding: 0.6rem 1.2rem; border-radius: 15px; background: rgba(255, 255, 255, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.6); transition: 0.3s;
         }
-        .nav-links a:active { transform: scale(0.9); background: #fff; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; perspective: 1500px; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; }
         .section-title { font-size: 2.5rem; font-weight: 900; margin: 4rem 0 2.5rem; border-left: 12px solid #4a90e2; padding-left: 1.5rem; }
 
         .theorems-grid { 
             display: grid; 
             grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
             gap: 4rem;
-            transform-style: preserve-3d;
         }
 
-        /* 3D КАРТОЧКА */
+        /* ИСПРАВЛЕННАЯ КАРТОЧКА (БЕЗ БЕЛЫХ ПОЛОС) */
         .theorem-card { 
             background: rgba(255, 255, 255, 0.35); 
             backdrop-filter: blur(20px) saturate(180%);
@@ -71,75 +68,52 @@
             border: 1px solid rgba(255, 255, 255, 0.7);
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.1);
             opacity: 0;
-            transform-style: preserve-3d;
-            transform: rotateX(45deg) translateY(100px); /* Упростил для лучшей работы Intersection Observer */
-            transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease, background 0.3s ease;
-            backface-visibility: hidden;
+            transform: translateY(50px) scale(0.95); /* Убрал rotateX, который давал полосу */
+            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
             cursor: pointer;
-        }
-
-        .theorem-card:active {
-            transform: scale(0.94) rotateX(5deg) !important;
-            background: rgba(255, 255, 255, 0.6);
-            transition: 0.1s;
+            will-change: transform, opacity;
         }
 
         .theorem-card.visible { 
             opacity: 1; 
-            transform: rotateX(0deg) translateZ(0) translateY(0); 
+            transform: translateY(0) scale(1); 
         }
 
-        .theorem-name { 
-            font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; 
-            color: #4a90e2; transition: all 0.3s ease;
-            display: inline-block;
-        }
-        .theorem-card:active .theorem-name { color: #ff00ff; transform: translateX(10px); }
+        .theorem-card:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.6); transition: 0.1s; }
 
-        body.turbo-mode .theorem-name {
-            animation: neonPulse 1s infinite alternate;
-        }
+        .theorem-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; color: #4a90e2; }
+        body.turbo-mode .theorem-name { animation: neonPulse 1s infinite alternate; }
         @keyframes neonPulse {
             from { text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff; color: #fff; }
             to { text-shadow: 0 0 10px #fff, 0 0 20px #00ffff; color: #fff; }
         }
 
         .theorem-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; line-height: 1.4; }
-        .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.8rem; border-radius: 12px; font-size: 0.95rem; margin-top: 1rem; color: #0f172a; }
+        .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.8rem; border-radius: 12px; font-size: 0.95rem; margin-top: 1rem; }
 
         .theorem-image { 
             width: 100%; height: 200px; background: #fff; 
             border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.6);
         }
-        .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; pointer-events: none; }
+        .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; }
 
-        /* Кнопка НАВЕРХ в стиле LIQUID GLASS */
         .btn-up {
             position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
-            background: rgba(255, 255, 255, 0.2); 
-            backdrop-filter: blur(15px) saturate(150%);
-            -webkit-backdrop-filter: blur(15px) saturate(150%);
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
             color: white; border-radius: 50%; display: flex;
             align-items: center; justify-content: center; font-size: 2rem;
             cursor: pointer; opacity: 0; visibility: hidden; 
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            z-index: 9999;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.3);
+            transition: 0.4s; z-index: 9999; border: 1px solid rgba(255, 255, 255, 0.4);
         }
-        .btn-up.show { opacity: 1; visibility: visible; transform: scale(1); }
-        .btn-up:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-5px) scale(1.1); }
-        .btn-up::before { content: ''; position: absolute; top: 10%; left: 15%; width: 30%; height: 20%; background: rgba(255, 255, 255, 0.4); border-radius: 50%; filter: blur(2px); transform: rotate(-15deg); }
+        .btn-up.show { opacity: 1; visibility: visible; }
 
-        /* КАПЧА */
         #captcha-overlay {
             position: fixed; inset: 0; z-index: 10000; background: rgba(255,255,255,0.4); backdrop-filter: blur(30px);
-            display: flex; align-items: center; justify-content: center; transition: 0.5s;
+            display: flex; align-items: center; justify-content: center;
         }
-        .captcha-box { background: #fff; padding: 3rem; border-radius: 50px; text-align: center; box-shadow: 0 40px 80px rgba(0,0,0,0.1); width: 90%; max-width: 400px; }
+        .captcha-box { background: #fff; padding: 3rem; border-radius: 50px; text-align: center; width: 90%; max-width: 400px; }
         .captcha-input { padding: 10px; width: 100%; border: 3px solid #4a90e2; border-radius: 20px; font-size: 2rem; text-align: center; margin: 20px 0; font-weight: 900; }
-        .btn-verify { width: 100%; padding: 15px; background: #4a90e2; color: #fff; border: none; border-radius: 25px; font-weight: 800; cursor: pointer; font-size: 1.1rem; }
 
         footer { padding: 4rem; text-align: center; font-weight: 900; opacity: 0.4; }
         body.no-scroll { overflow: hidden; }
@@ -151,8 +125,8 @@
     <div class="captcha-box">
         <h2 style="font-weight: 900;">Йо бро, реши пример</h2>
         <p id="captcha-question" style="font-size: 2.5rem; font-weight: 900; color: #4a90e2; margin: 10px 0;"></p>
-        <input type="number" id="captcha-answer" class="captcha-input" placeholder="?">
-        <button onclick="checkCaptcha()" class="btn-verify">Я не робот</button>
+        <input type="number" id="captcha-answer" class="captcha-input">
+        <button onclick="checkCaptcha()" style="width:100%; padding:15px; background:#4a90e2; color:white; border:none; border-radius:25px; font-weight:800; cursor:pointer;">Я не робот</button>
     </div>
 </div>
 
@@ -255,34 +229,27 @@
             }, 500);
         } else {
             haptic([50, 30, 50]);
-            alert("Йо бро, ты походу робот");
             location.reload();
         }
     }
 
-    // АНИМАЦИЯ: Сделал так, чтобы срабатывала раньше (rootMargin)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
             }
         });
-    }, { threshold: 0.05, rootMargin: "0px 0px 50px 0px" });
+    }, { threshold: 0.1, rootMargin: "0px 0px 50px 0px" });
 
     document.querySelectorAll('.theorem-card').forEach(card => {
         observer.observe(card);
         card.addEventListener('click', () => haptic(15));
     });
 
-    // КНОПКА НАВЕРХ: Логика появления
     const btnUp = document.getElementById('btnUp');
     window.onscroll = function() {
-        // Появляется на середине высоты контента
-        if (window.pageYOffset > (document.documentElement.scrollHeight / 3)) {
-            btnUp.classList.add('show');
-        } else {
-            btnUp.classList.remove('show');
-        }
+        if (window.pageYOffset > 800) btnUp.classList.add('show');
+        else btnUp.classList.remove('show');
     };
     btnUp.onclick = function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -298,10 +265,6 @@
             haptic([100, 50, 100, 50, 200]);
             clicks = 0;
         }
-    });
-
-    document.querySelectorAll('.nav-links a').forEach(a => {
-        a.addEventListener('click', () => haptic(10));
     });
 </script>
 </body>
