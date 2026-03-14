@@ -11,7 +11,6 @@
         
         body { 
             font-family: 'Poppins', sans-serif;
-            /* Яркий переход от сиреневого к зелёному */
             background: linear-gradient(135deg, #f7b7ff 0%, #8ec5fc 50%, #b2ffda 100%);
             background-attachment: fixed;
             color: #0f172a; 
@@ -40,9 +39,10 @@
         header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; user-select: none; transition: 0.3s; }
         header h1:active { transform: scale(0.9); }
 
+        /* МЕНЮ: Теперь НЕ прилипает (намертво на своём месте) */
         .nav-menu { 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
-            padding: 1.2rem; position: sticky; top: 0; z-index: 1000; 
+            padding: 1.2rem; position: relative; z-index: 1000; 
             border-bottom: 1px solid rgba(255, 255, 255, 0.4); 
         }
         .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
@@ -63,7 +63,7 @@
             transform-style: preserve-3d;
         }
 
-        /* 3D КАРТОЧКА С АНИМАЦИЕЙ НАЖАТИЯ */
+        /* 3D КАРТОЧКА */
         .theorem-card { 
             background: rgba(255, 255, 255, 0.35); 
             backdrop-filter: blur(20px) saturate(180%);
@@ -72,13 +72,12 @@
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.1);
             opacity: 0;
             transform-style: preserve-3d;
-            transform: rotateX(85deg) translateZ(-300px) translateY(100px);
+            transform: rotateX(45deg) translateY(100px); /* Упростил для лучшей работы Intersection Observer */
             transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease, background 0.3s ease;
             backface-visibility: hidden;
             cursor: pointer;
         }
 
-        /* Эффект при клике на блок */
         .theorem-card:active {
             transform: scale(0.94) rotateX(5deg) !important;
             background: rgba(255, 255, 255, 0.6);
@@ -90,12 +89,6 @@
             transform: rotateX(0deg) translateZ(0) translateY(0); 
         }
 
-        .theorem-card.exit-up { 
-            opacity: 0;
-            transform: rotateX(-85deg) translateZ(-300px) translateY(-100px);
-        }
-
-        /* АНИМАЦИЯ ЗАГОЛОВКОВ */
         .theorem-name { 
             font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; 
             color: #4a90e2; transition: all 0.3s ease;
@@ -103,7 +96,6 @@
         }
         .theorem-card:active .theorem-name { color: #ff00ff; transform: translateX(10px); }
 
-        /* Неоновая пульсация в Турбо-режиме */
         body.turbo-mode .theorem-name {
             animation: neonPulse 1s infinite alternate;
         }
@@ -112,13 +104,33 @@
             to { text-shadow: 0 0 10px #fff, 0 0 20px #00ffff; color: #fff; }
         }
 
-        .theorem-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; }
+        .theorem-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; line-height: 1.4; }
+        .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.8rem; border-radius: 12px; font-size: 0.95rem; margin-top: 1rem; color: #0f172a; }
+
         .theorem-image { 
-            width: 100%; height: 200px; background: rgba(255,255,255,0.4); 
+            width: 100%; height: 200px; background: #fff; 
             border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.6);
         }
         .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; pointer-events: none; }
+
+        /* Кнопка НАВЕРХ в стиле LIQUID GLASS */
+        .btn-up {
+            position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
+            background: rgba(255, 255, 255, 0.2); 
+            backdrop-filter: blur(15px) saturate(150%);
+            -webkit-backdrop-filter: blur(15px) saturate(150%);
+            color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 2rem;
+            cursor: pointer; opacity: 0; visibility: hidden; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        .btn-up.show { opacity: 1; visibility: visible; transform: scale(1); }
+        .btn-up:hover { background: rgba(255, 255, 255, 0.3); transform: translateY(-5px) scale(1.1); }
+        .btn-up::before { content: ''; position: absolute; top: 10%; left: 15%; width: 30%; height: 20%; background: rgba(255, 255, 255, 0.4); border-radius: 50%; filter: blur(2px); transform: rotate(-15deg); }
 
         /* КАПЧА */
         #captcha-overlay {
@@ -137,7 +149,7 @@
 
 <div id="captcha-overlay">
     <div class="captcha-box">
-        <h2 style="font-weight: 900;">Йо бро, реши пример и докажи что не робот</h2>
+        <h2 style="font-weight: 900;">Йо бро, реши пример</h2>
         <p id="captcha-question" style="font-size: 2.5rem; font-weight: 900; color: #4a90e2; margin: 10px 0;"></p>
         <input type="number" id="captcha-answer" class="captcha-input" placeholder="?">
         <button onclick="checkCaptcha()" class="btn-verify">Я не робот</button>
@@ -146,7 +158,7 @@
 
 <header>
     <h1 id="main-title">Справочник Теорем</h1>
-    <p>Теоремы за 7 класс</p>
+    <p>Все теоремы за 7 класс в твоём Tecno</p>
 </header>
 
 <nav class="nav-menu">
@@ -164,72 +176,72 @@
     <section id="sec1">
         <h2 class="section-title">Углы</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">1. Смежные углы</div><p class="theorem-text">Сумма смежных углов равна 180°.</p><div class="theorem-image"><img src="img/img1.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text">Вертикальные углы всегда равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные</div><p class="theorem-text">Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/Img3.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">1. Смежные углы</div><p class="theorem-text"><strong>Теорема:</strong> Сумма смежных углов равна 180°.</p><div class="example-box">∠1 + ∠2 = 180°</div><div class="theorem-image"><img src="img/img1.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text"><strong>Теорема:</strong> Вертикальные углы всегда равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные</div><p class="theorem-text"><strong>Теорема:</strong> Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/Img3.png"></div></div>
         </div>
     </section>
 
     <section id="sec2">
         <h2 class="section-title">Треугольники</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">4. I признак (СУС)</div><p class="theorem-text">По двум сторонам и углу между ними.</p><div class="theorem-image"><img src="img/img4.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">5. II признак (УСУ)</div><p class="theorem-text">По стороне и двум прилежащим углам.</p><div class="theorem-image"><img src="img/img5.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">6. III признак (ССС)</div><p class="theorem-text">По трём равным сторонам.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">7. Углы в р/б △</div><p class="theorem-text">Углы при основании равнобедренного треугольника равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name">8. Биссектриса в р/б △</div><p class="theorem-text">Является медианой и высотой.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">9. Неравенство △</div><p class="theorem-text">Сумма двух любых сторон всегда больше третьей.</p><div class="theorem-image"><img src="img/img9.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">4. I признак (СУС)</div><p class="theorem-text"><strong>Теорема:</strong> Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img4.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">5. II признак (УСУ)</div><p class="theorem-text"><strong>Теорема:</strong> Если сторона и два прилежащих к ней угла одного треугольника соответственно равны стороне и двум прилежащим углам другого треугольника, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img5.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">6. III признак (ССС)</div><p class="theorem-text"><strong>Теорема:</strong> Если три стороны одного треугольника соответственно равны трём сторонам другого треугольника, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">7. Углы в р/б △</div><p class="theorem-text"><strong>Свойство:</strong> В равнобедренном треугольнике углы при основании равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
+            <div class="theorem-card"><div class="theorem-name">8. Биссектриса в р/б △</div><p class="theorem-text"><strong>Теорема:</strong> В равнобедренном треугольнике медиана, проведённая к основанию, является биссектрисой и высотой.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">9. Неравенство △</div><p class="theorem-text"><strong>Теорема:</strong> Каждая сторона треугольника меньше суммы двух других сторон.</p><div class="example-box">a < b + c</div><div class="theorem-image"><img src="img/img9.png"></div></div>
         </div>
     </section>
 
     <section id="sec3">
         <h2 class="section-title">Параллельные прямые</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text">Если равны — прямые параллельны.</p><div class="theorem-image"><img src="img/img10.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text">Если равны — прямые параллельны.</p><div class="theorem-image"><img src="img/img11.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text">Если сумма 180° — прямые параллельны.</p><div class="theorem-image"><img src="img/img12.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name">13. Аксиома</div><p class="theorem-text">Через точку вне прямой проходит одна параллельная ей.</p><div class="theorem-image"><img src="img/img13.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">14. Сумма углов △</div><p class="theorem-text">Всегда равна 180°.</p><div class="theorem-image"><img src="img/img14.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей накрест лежащие углы равны, то прямые параллельны.</p><div class="theorem-image"><img src="img/img10.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей соответственные углы равны, то прямые параллельны.</p><div class="theorem-image"><img src="img/img11.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей сумма односторонних углов равна 180°, то прямые параллельны.</p><div class="theorem-image"><img src="img/img12.webp"></div></div>
+            <div class="theorem-card"><div class="theorem-name">13. Аксиома</div><p class="theorem-text"><strong>Аксиома:</strong> Через точку, не лежащую на данной прямой, проходит только одна прямая, параллельная данной.</p><div class="theorem-image"><img src="img/img13.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">14. Сумма углов △</div><p class="theorem-text"><strong>Теорема:</strong> Сумма углов любого треугольника всегда равна 180°.</p><div class="theorem-image"><img src="img/img14.jpeg"></div></div>
         </div>
     </section>
 
     <section id="sec4">
         <h2 class="section-title">Прямоугольные △</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">15. Сумма острых</div><p class="theorem-text">В прямоугольном треугольнике равна 90°.</p><div class="theorem-image"><img src="img/img15.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">16. Катет против 30°</div><p class="theorem-text">Равен половине гипотенузы.</p><div class="theorem-image"><img src="img/img16.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">17. Признак Г и К</div><p class="theorem-text">Равенство по гипотенузе и катету.</p><div class="theorem-image"><img src="img/img17.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">15. Сумма острых</div><p class="theorem-text"><strong>Теорема:</strong> Сумма острых углов прямоугольного треугольника равна 90°.</p><div class="theorem-image"><img src="img/img15.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">16. Катет против 30°</div><p class="theorem-text"><strong>Теорема:</strong> Катет прямоугольного треугольника, лежащий против угла в 30°, равен половине гипотенузы.</p><div class="theorem-image"><img src="img/img16.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">17. Признак Г и К</div><p class="theorem-text"><strong>Признак:</strong> Если гипотенуза и катет одного прямоугольного треугольника соответственно равны гипотенузе и катету другого, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img17.png"></div></div>
         </div>
     </section>
 
     <section id="sec5">
         <h2 class="section-title">Окружность</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">18. Касательная</div><p class="theorem-text">Перпендикулярна радиусу в точке касания.</p><div class="theorem-image"><img src="img/img18.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">19. Отрезки касательных</div><p class="theorem-text">Равны, если проведены из одной точки.</p><div class="theorem-image"><img src="img/img19.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">20. Диаметр и хорда</div><p class="theorem-text">Перпендикулярный диаметр делит хорду пополам.</p><div class="theorem-image"><img src="img/img20.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">18. Касательная</div><p class="theorem-text"><strong>Теорема:</strong> Касательная к окружности перпендикулярна радиусу, проведённому в точку касания.</p><div class="theorem-image"><img src="img/img18.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">19. Отрезки касательных</div><p class="theorem-text"><strong>Теорема:</strong> Отрезки касательных к окружности, проведённые из одной точки, равны.</p><div class="theorem-image"><img src="img/img19.jpg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">20. Диаметр и хорда</div><p class="theorem-text"><strong>Теорема:</strong> Диаметр, перпендикулярный к хорде, делит эту хорду пополам.</p><div class="theorem-image"><img src="img/img20.jpeg"></div></div>
         </div>
     </section>
 
     <section id="sec6">
-        <h2 class="section-title">Дополнительно</h2>
+        <h2 class="section-title">Разное</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">21. Внешний угол</div><p class="theorem-text">Равен сумме двух углов, не смежных с ним.</p><div class="theorem-image"><img src="img/img21.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">22. Соотношение</div><p class="theorem-text">Против большего угла лежит большая сторона.</p><div class="theorem-image"><img src="img/img22.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">23. Медиана гипотенузы</div><p class="theorem-text">В прямоугольном треугольнике равна её половине.</p><div class="theorem-image"><img src="img/img23.jpeg"></div></div>
+            <div class="theorem-card"><div class="theorem-name">21. Внешний угол</div><p class="theorem-text"><strong>Теорема:</strong> Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним.</p><div class="theorem-image"><img src="img/img21.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">22. Соотношение</div><p class="theorem-text"><strong>Теорема:</strong> В треугольнике против большей стороны лежит больший угол, и обратно.</p><div class="theorem-image"><img src="img/img22.png"></div></div>
+            <div class="theorem-card"><div class="theorem-name">23. Медиана гипотенузы</div><p class="theorem-text"><strong>Теорема:</strong> В прямоугольном треугольнике медиана, проведённая к гипотенузе, равна её половине.</p><div class="theorem-image"><img src="img/img23.jpeg"></div></div>
         </div>
     </section>
 </main>
+
+<div id="btnUp" class="btn-up">↑</div>
 
 <footer>
     <p>Created by furry-WizotoW & tiny heel-Star kaimito</p>
 </footer>
 
 <script>
-    // Вибрация
     function haptic(ms = 20) { if (window.navigator.vibrate) window.navigator.vibrate(ms); }
 
-    // Капча
     const n1 = Math.floor(Math.random() * 10) + 1, n2 = Math.floor(Math.random() * 10) + 1, sum = n1 + n2;
     document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
 
@@ -248,30 +260,35 @@
         }
     }
 
-    // Барабан
+    // АНИМАЦИЯ: Сделал так, чтобы срабатывала раньше (rootMargin)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('visible');
-                entry.target.classList.remove('exit-up');
-            } else {
-                if (entry.boundingClientRect.top < 0) {
-                    entry.target.classList.add('exit-up');
-                    entry.target.classList.remove('visible');
-                } else {
-                    entry.target.classList.remove('visible', 'exit-up');
-                }
             }
         });
-    }, { threshold: 0.1 });
+    }, { threshold: 0.05, rootMargin: "0px 0px 50px 0px" });
 
     document.querySelectorAll('.theorem-card').forEach(card => {
         observer.observe(card);
-        // Добавляем вибро на клик
         card.addEventListener('click', () => haptic(15));
     });
 
-    // Пасхалка
+    // КНОПКА НАВЕРХ: Логика появления
+    const btnUp = document.getElementById('btnUp');
+    window.onscroll = function() {
+        // Появляется на середине высоты контента
+        if (window.pageYOffset > (document.documentElement.scrollHeight / 3)) {
+            btnUp.classList.add('show');
+        } else {
+            btnUp.classList.remove('show');
+        }
+    };
+    btnUp.onclick = function() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        haptic(30);
+    };
+
     let clicks = 0;
     document.getElementById('main-title').addEventListener('click', () => {
         clicks++;
@@ -280,16 +297,12 @@
             document.body.classList.toggle('turbo-mode');
             haptic([100, 50, 100, 50, 200]);
             clicks = 0;
-            const isTurbo = document.body.classList.contains('turbo-mode');
-            if(isTurbo) alert("TURBO MODE ACTIVATED! ⚡");
         }
     });
 
-    // Вибро на меню
     document.querySelectorAll('.nav-links a').forEach(a => {
         a.addEventListener('click', () => haptic(10));
     });
 </script>
 </body>
 </html>
-
