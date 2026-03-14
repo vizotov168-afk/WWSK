@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Геометрия 7 класс — Сделано с ❤️ для школьников</title>
+    <title>Геометрия 7 класс</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
@@ -16,10 +16,8 @@
             color: #0f172a; 
             overflow-x: hidden;
             min-height: 100vh;
-            transition: all 0.5s ease;
         }
 
-        /* ТУРБО-РЕЖИМ */
         body.turbo-mode {
             background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);
             background-size: 400% 400%;
@@ -36,8 +34,7 @@
             background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
-        header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; user-select: none; transition: 0.3s; }
-        header h1:active { transform: scale(0.9); }
+        header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; }
 
         .nav-menu { 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
@@ -48,74 +45,56 @@
         .nav-links a { 
             text-decoration: none; color: #0f172a; font-weight: 700; font-size: 0.8rem;
             padding: 0.6rem 1.2rem; border-radius: 15px; background: rgba(255, 255, 255, 0.4);
-            border: 1px solid rgba(255, 255, 255, 0.6); transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.6);
         }
 
         .container { max-width: 1200px; margin: 0 auto; padding: 4rem 1.5rem; }
         .section-title { font-size: 2.5rem; font-weight: 900; margin: 4rem 0 2.5rem; border-left: 12px solid #4a90e2; padding-left: 1.5rem; }
 
-        .theorems-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-            gap: 4rem;
-        }
+        .theorems-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 4rem; }
 
-        /* ИСПРАВЛЕННАЯ КАРТОЧКА (БЕЗ БЕЛЫХ ПОЛОС) */
+        /* ФИКС ПОЛОСКИ: Убрал backdrop-filter, добавил плотный полупрозрачный фон */
         .theorem-card { 
-            background: rgba(255, 255, 255, 0.35); 
-            backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(255, 255, 255, 0.85); /* Плотный цвет вместо размытия */
             border-radius: 35px; padding: 2.5rem; 
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 15px 35px rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
             opacity: 0;
-            transform: translateY(50px) scale(0.95); /* Убрал rotateX, который давал полосу */
-            transition: transform 0.6s ease-out, opacity 0.6s ease-out;
-            cursor: pointer;
-            will-change: transform, opacity;
+            transform: translateY(30px);
+            transition: all 0.5s ease-out;
+            outline: 1px solid transparent; /* Принудительное сглаживание */
         }
 
-        .theorem-card.visible { 
-            opacity: 1; 
-            transform: translateY(0) scale(1); 
-        }
-
-        .theorem-card:active { transform: scale(0.96); background: rgba(255, 255, 255, 0.6); transition: 0.1s; }
+        .theorem-card.visible { opacity: 1; transform: translateY(0); }
+        .theorem-card:active { transform: scale(0.97); transition: 0.1s; }
 
         .theorem-name { font-size: 1.5rem; font-weight: 900; margin-bottom: 1rem; color: #4a90e2; }
-        body.turbo-mode .theorem-name { animation: neonPulse 1s infinite alternate; }
-        @keyframes neonPulse {
-            from { text-shadow: 0 0 5px #fff, 0 0 10px #ff00ff; color: #fff; }
-            to { text-shadow: 0 0 10px #fff, 0 0 20px #00ffff; color: #fff; }
-        }
-
         .theorem-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; line-height: 1.4; }
-        .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.8rem; border-radius: 12px; font-size: 0.95rem; margin-top: 1rem; }
+        .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.8rem; border-radius: 12px; margin-top: 1rem; }
 
         .theorem-image { 
             width: 100%; height: 200px; background: #fff; 
-            border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.6);
+            border-radius: 20px; display: flex; align-items: center; justify-content: center; 
+            border: 1px solid #eee; overflow: hidden;
         }
         .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; }
 
         .btn-up {
             position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
-            color: white; border-radius: 50%; display: flex;
+            background: #4a90e2; color: white; border-radius: 50%; display: flex;
             align-items: center; justify-content: center; font-size: 2rem;
-            cursor: pointer; opacity: 0; visibility: hidden; 
-            transition: 0.4s; z-index: 9999; border: 1px solid rgba(255, 255, 255, 0.4);
+            cursor: pointer; opacity: 0; visibility: hidden; transition: 0.3s; z-index: 9999;
         }
         .btn-up.show { opacity: 1; visibility: visible; }
 
         #captcha-overlay {
-            position: fixed; inset: 0; z-index: 10000; background: rgba(255,255,255,0.4); backdrop-filter: blur(30px);
+            position: fixed; inset: 0; z-index: 10000; background: #fff;
             display: flex; align-items: center; justify-content: center;
         }
-        .captcha-box { background: #fff; padding: 3rem; border-radius: 50px; text-align: center; width: 90%; max-width: 400px; }
-        .captcha-input { padding: 10px; width: 100%; border: 3px solid #4a90e2; border-radius: 20px; font-size: 2rem; text-align: center; margin: 20px 0; font-weight: 900; }
+        .captcha-box { text-align: center; width: 90%; max-width: 400px; }
+        .captcha-input { padding: 10px; width: 100%; border: 3px solid #4a90e2; border-radius: 20px; font-size: 2rem; text-align: center; margin: 20px 0; }
 
-        footer { padding: 4rem; text-align: center; font-weight: 900; opacity: 0.4; }
+        footer { padding: 4rem; text-align: center; font-weight: 900; opacity: 0.3; }
         body.no-scroll { overflow: hidden; }
     </style>
 </head>
@@ -123,26 +102,19 @@
 
 <div id="captcha-overlay">
     <div class="captcha-box">
-        <h2 style="font-weight: 900;">Йо бро, реши пример</h2>
-        <p id="captcha-question" style="font-size: 2.5rem; font-weight: 900; color: #4a90e2; margin: 10px 0;"></p>
+        <h2 style="font-weight:900">Реши пример</h2>
+        <p id="captcha-question" style="font-size:3rem; font-weight:900; color:#4a90e2"></p>
         <input type="number" id="captcha-answer" class="captcha-input">
-        <button onclick="checkCaptcha()" style="width:100%; padding:15px; background:#4a90e2; color:white; border:none; border-radius:25px; font-weight:800; cursor:pointer;">Я не робот</button>
+        <button onclick="checkCaptcha()" style="width:100%; padding:15px; background:#4a90e2; color:#fff; border:none; border-radius:20px; font-weight:900">ВХОД</button>
     </div>
 </div>
 
-<header>
-    <h1 id="main-title">Справочник Теорем</h1>
-    <p>Все теоремы за 7 класс в твоём Tecno</p>
-</header>
+<header><h1 id="main-title">Справочник Теорем</h1><p>Все теоремы за 7 класс</p></header>
 
 <nav class="nav-menu">
     <div class="nav-links">
-        <a href="#sec1">Углы</a>
-        <a href="#sec2">Треугольники</a>
-        <a href="#sec3">Параллели</a>
-        <a href="#sec4">Прямоугольные</a>
-        <a href="#sec5">Окружность</a>
-        <a href="#sec6">Разное</a>
+        <a href="#sec1">Углы</a><a href="#sec2">Треугольники</a><a href="#sec3">Параллели</a>
+        <a href="#sec4">Прямоугольные</a><a href="#sec5">Окружность</a><a href="#sec6">Разное</a>
     </div>
 </nav>
 
@@ -209,63 +181,35 @@
 
 <div id="btnUp" class="btn-up">↑</div>
 
-<footer>
-    <p>Created by furry-WizotoW & tiny heel-Star kaimito</p>
-</footer>
-
 <script>
     function haptic(ms = 20) { if (window.navigator.vibrate) window.navigator.vibrate(ms); }
-
     const n1 = Math.floor(Math.random() * 10) + 1, n2 = Math.floor(Math.random() * 10) + 1, sum = n1 + n2;
     document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
 
     function checkCaptcha() {
-        haptic(40);
         if (parseInt(document.getElementById('captcha-answer').value) === sum) {
-            document.getElementById('captcha-overlay').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('captcha-overlay').style.display = 'none';
-                document.body.classList.remove('no-scroll');
-            }, 500);
-        } else {
-            haptic([50, 30, 50]);
-            location.reload();
-        }
+            document.getElementById('captcha-overlay').style.display = 'none';
+            document.body.classList.remove('no-scroll');
+        } else { location.reload(); }
     }
 
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('visible');
-            }
-        });
-    }, { threshold: 0.1, rootMargin: "0px 0px 50px 0px" });
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
 
-    document.querySelectorAll('.theorem-card').forEach(card => {
-        observer.observe(card);
-        card.addEventListener('click', () => haptic(15));
-    });
+    document.querySelectorAll('.theorem-card').forEach(card => observer.observe(card));
 
     const btnUp = document.getElementById('btnUp');
-    window.onscroll = function() {
-        if (window.pageYOffset > 800) btnUp.classList.add('show');
+    window.onscroll = () => {
+        if (window.pageYOffset > 600) btnUp.classList.add('show');
         else btnUp.classList.remove('show');
     };
-    btnUp.onclick = function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        haptic(30);
-    };
+    btnUp.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    let clicks = 0;
-    document.getElementById('main-title').addEventListener('click', () => {
-        clicks++;
-        haptic(15);
-        if (clicks === 5) {
-            document.body.classList.toggle('turbo-mode');
-            haptic([100, 50, 100, 50, 200]);
-            clicks = 0;
-        }
-    });
+    let clks = 0;
+    document.getElementById('main-title').onclick = () => {
+        clks++; if(clks === 5) { document.body.classList.toggle('turbo-mode'); clks = 0; haptic(100); }
+    };
 </script>
 </body>
 </html>
