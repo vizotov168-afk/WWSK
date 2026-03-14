@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
-    <title>Геометрия 7 класс</title>
+    <title>Геометрия 7 класс — Полный Справочник</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800;900&display=swap" rel="stylesheet">
     <style>
         html { scroll-behavior: smooth; }
@@ -18,98 +18,102 @@
             min-height: 100vh;
         }
 
+        /* АНИМИРОВАННАЯ КНОПКА ЯЗЫКА */
         .lang-switch {
             position: fixed; top: 20px; right: 20px; z-index: 10001;
-            padding: 10px 20px; background: rgba(255, 255, 255, 0.2);
-            backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 20px; color: white; font-weight: 800;
-            cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: 0.3s; text-transform: uppercase; font-size: 0.8rem;
+            padding: 12px 24px; background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 25px; color: white; font-weight: 900;
+            cursor: pointer; box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-transform: uppercase; font-size: 0.9rem;
+        }
+        .lang-switch.active { transform: rotate(360deg) scale(1.1); }
+
+        /* КАПЧА: ВЫЛЕТАЮЩАЯ ПАНЕЛЬ */
+        #captcha-overlay {
+            position: fixed; inset: 0; z-index: 20000;
+            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(40px);
+            display: flex; align-items: center; justify-content: center;
+            transition: 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .captcha-box { 
+            background: #fff; padding: 3rem; border-radius: 50px; text-align: center;
+            box-shadow: 0 50px 100px rgba(0,0,0,0.15); width: 90%; max-width: 420px;
+            transform: translateY(0); transition: 0.5s;
+        }
+        .captcha-box.hide { transform: translateY(-100vh); }
+        .captcha-input { 
+            padding: 15px; width: 100%; border: 4px solid #4a90e2; border-radius: 20px;
+            font-size: 2.5rem; text-align: center; margin: 20px 0; font-weight: 900; color: #4a90e2;
         }
 
         header { 
-            padding: 5rem 1rem; text-align: center; 
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 7rem 1rem; text-align: center; 
+            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(10px);
         }
-        header h1 { font-weight: 900; font-size: 2.8rem; cursor: pointer; }
+        header h1 { font-weight: 900; font-size: 3.5rem; letter-spacing: -2px; }
 
         .nav-menu { 
-            background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
-            padding: 1rem; position: sticky; top: 0; z-index: 1000; 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.4); 
+            background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(25px);
+            padding: 1.2rem; position: sticky; top: 0; z-index: 1000; 
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
         }
-        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+        .nav-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
         .nav-links a { 
-            text-decoration: none; color: #0f172a; font-weight: 700; font-size: 0.75rem;
-            padding: 0.5rem 1rem; border-radius: 12px; background: rgba(255, 255, 255, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.5); transition: 0.3s;
+            text-decoration: none; color: #0f172a; font-weight: 800; font-size: 0.85rem;
+            padding: 0.7rem 1.4rem; border-radius: 18px; background: rgba(255, 255, 255, 0.4);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid transparent;
         }
+        .nav-links a:hover { background: #4a90e2; color: white; transform: translateY(-3px); }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 1rem; perspective: 2000px; }
-        .section-title { font-size: 2rem; font-weight: 900; margin: 3rem 0 1.5rem; border-left: 10px solid #4a90e2; padding-left: 1rem; }
+        .container { max-width: 1300px; margin: 0 auto; padding: 2rem; perspective: 2500px; }
+        .section-title { 
+            font-size: 2.8rem; font-weight: 900; margin: 5rem 0 3rem; 
+            border-left: 15px solid #4a90e2; padding-left: 2rem;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+        }
 
         .theorems-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
-            gap: 2.5rem;
-            transform-style: preserve-3d;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); 
+            gap: 4rem; transform-style: preserve-3d;
         }
 
+        /* ТВОЙ ЛЮБИМЫЙ БАРАБАН */
         .theorem-card { 
-            background: rgba(255, 255, 255, 0.35); 
-            backdrop-filter: blur(20px) saturate(180%);
-            border-radius: 30px; padding: 1.8rem; 
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 10px 30px rgba(31, 38, 135, 0.08);
-            opacity: 0;
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(20px);
+            border-radius: 40px; padding: 2.5rem; border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.05); opacity: 0;
             transform-style: preserve-3d;
-            transform: rotateX(50deg) translateZ(-150px) translateY(100px);
-            transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.6s ease;
-            backface-visibility: hidden;
+            transform: rotateX(80deg) translateZ(-400px) translateY(200px);
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
             will-change: transform, opacity;
         }
+        .theorem-card.visible { opacity: 1; transform: rotateX(0deg) translateZ(0) translateY(0); }
+        .theorem-card.exit-up { opacity: 0; transform: rotateX(-80deg) translateZ(-400px) translateY(-200px); }
 
-        .theorem-card.visible { 
-            opacity: 1; 
-            transform: rotateX(0deg) translateZ(0) translateY(0); 
-        }
-
-        .theorem-card.exit-up { 
-            opacity: 0;
-            transform: rotateX(-50deg) translateZ(-150px) translateY(-100px);
-        }
-
-        .theorem-name { font-size: 1.3rem; font-weight: 900; margin-bottom: 0.6rem; color: #4a90e2; }
-        .theorem-text { font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; opacity: 0.9; line-height: 1.4; }
-        .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.7rem; border-radius: 10px; font-size: 0.85rem; margin-bottom: 1rem; }
-
+        .theorem-name { font-size: 1.6rem; font-weight: 900; margin-bottom: 1.2rem; color: #4a90e2; line-height: 1.1; }
+        .theorem-text { font-size: 1.15rem; font-weight: 600; line-height: 1.5; margin-bottom: 2rem; color: #1e293b; }
+        
         .theorem-image { 
-            width: 100%; height: 170px; background: #fff; 
-            border-radius: 15px; display: flex; align-items: center; justify-content: center; overflow: hidden;
-            border: 1px solid rgba(255,255,255,0.6);
+            width: 100%; height: 220px; background: #fff; border-radius: 25px; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.02); border: 1px solid #eee;
         }
-        .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; }
+        .theorem-image img { max-width: 85%; max-height: 85%; object-fit: contain; }
 
         .btn-up {
-            position: fixed; bottom: 20px; right: 20px; width: 55px; height: 55px;
-            background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px);
-            color: white; border-radius: 50%; display: flex;
-            align-items: center; justify-content: center; font-size: 1.5rem;
-            cursor: pointer; opacity: 0; visibility: hidden; 
-            transition: 0.4s; z-index: 9999; border: 1px solid rgba(255, 255, 255, 0.4);
+            position: fixed; bottom: 40px; right: 40px; width: 70px; height: 70px;
+            background: #4a90e2; color: white; border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 2.5rem;
+            cursor: pointer; opacity: 0; visibility: hidden; transition: 0.5s;
+            z-index: 9999; box-shadow: 0 10px 30px rgba(74, 144, 226, 0.4);
         }
         .btn-up.show { opacity: 1; visibility: visible; }
 
-        #captcha-overlay {
-            position: fixed; inset: 0; z-index: 10000; background: rgba(255,255,255,0.4); backdrop-filter: blur(30px);
-            display: flex; align-items: center; justify-content: center;
-        }
-        .captcha-box { background: #fff; padding: 2rem; border-radius: 30px; text-align: center; width: 85%; max-width: 320px; }
-        .captcha-input { padding: 8px; width: 100%; border: 3px solid #4a90e2; border-radius: 12px; font-size: 1.5rem; text-align: center; margin: 15px 0; }
-        
-        footer { padding: 2rem; text-align: center; font-weight: 800; opacity: 0.4; font-size: 0.7rem; }
-        body.no-scroll { overflow: hidden; }
+        footer { padding: 5rem; text-align: center; font-weight: 900; opacity: 0.3; letter-spacing: 2px; }
+        body.no-scroll { overflow: hidden; height: 100vh; }
     </style>
 </head>
 <body class="no-scroll">
@@ -117,47 +121,46 @@
 <button class="lang-switch" id="langBtn" onclick="toggleLanguage()">EN</button>
 
 <div id="captcha-overlay">
-    <div class="captcha-box">
-        <h2 class="lang" data-ru="Реши пример" data-en="Solve it">Реши пример</h2>
-        <p id="captcha-question" style="font-size: 2rem; font-weight: 900; color: #4a90e2; margin: 5px 0;"></p>
-        <input type="number" id="captcha-answer" class="captcha-input">
-        <button onclick="checkCaptcha()" style="width:100%; padding:10px; border-radius:15px; border:none; background:#4a90e2; color:white; font-weight:800;">OK</button>
+    <div class="captcha-box" id="cBox">
+        <h2 class="lang" data-ru="Подтверди, что ты не бот" data-en="Prove you are human">Подтверди, что ты не бот</h2>
+        <p id="captcha-question" style="font-size: 3rem; font-weight: 900; color: #4a90e2; margin: 15px 0;"></p>
+        <input type="number" id="captcha-answer" class="captcha-input" placeholder="?">
+        <button onclick="checkCaptcha()" style="width:100%; padding:20px; background:#4a90e2; color:white; border:none; border-radius:25px; font-weight:900; cursor:pointer; font-size: 1.2rem;">ПРОВЕРИТЬ</button>
     </div>
 </div>
 
 <header>
-    <h1 class="lang" data-ru="Геометрия 7" data-en="Geometry 7">Геометрия 7</h1>
+    <h1 class="lang" data-ru="ГЕОМЕТРИЯ 7" data-en="GEOMETRY 7">ГЕОМЕТРИЯ 7</h1>
+    <p style="font-weight: 800; opacity: 0.6; margin-top: 10px;" class="lang" data-ru="Полный сборник всех теорем и признаков" data-en="Complete collection of all theorems">Полный сборник всех теорем и признаков</p>
 </header>
 
 <nav class="nav-menu">
     <div class="nav-links">
         <a href="#sec1" class="lang" data-ru="Углы" data-en="Angles">Углы</a>
         <a href="#sec2" class="lang" data-ru="Треугольники" data-en="Triangles">Треугольники</a>
-        <a href="#sec3" class="lang" data-ru="Параллели" data-en="Parallels">Параллели</a>
+        <a href="#sec3" class="lang" data-ru="Параллельность" data-en="Parallelism">Параллельность</a>
         <a href="#sec4" class="lang" data-ru="Прямоугольные" data-en="Right Tri.">Прямоугольные</a>
         <a href="#sec5" class="lang" data-ru="Окружность" data-en="Circle">Окружность</a>
-        <a href="#sec6" class="lang" data-ru="Разное" data-en="Misc">Разное</a>
     </div>
 </nav>
 
 <main class="container">
     <section id="sec1">
-        <h2 class="section-title lang" data-ru="Углы" data-en="Angles">Углы</h2>
+        <h2 class="section-title lang" data-ru="Углы и Линии" data-en="Angles & Lines">Углы и Линии</h2>
         <div class="theorems-grid">
             <div class="theorem-card">
                 <div class="theorem-name lang" data-ru="1. Смежные углы" data-en="1. Adjacent Angles">1. Смежные углы</div>
-                <p class="theorem-text lang" data-ru="Сумма смежных углов равна 180°." data-en="Sum of adjacent angles is 180°.">Сумма смежных углов равна 180°.</p>
-                <div class="example-box">∠1 + ∠2 = 180°</div>
+                <p class="theorem-text lang" data-ru="Два угла, у которых одна сторона общая, а две другие являются продолжениями одна другой, называются смежными. Сумма смежных углов всегда равна 180°." data-en="Two angles are adjacent if they have a common side and their other sides are opposite rays. Their sum is 180°.">Два угла, у которых одна сторона общая, а две другие являются продолжениями одна другой, называются смежными. Сумма смежных углов всегда равна 180°.</p>
                 <div class="theorem-image"><img src="img/img1.jpeg"></div>
             </div>
             <div class="theorem-card">
                 <div class="theorem-name lang" data-ru="2. Вертикальные углы" data-en="2. Vertical Angles">2. Вертикальные углы</div>
-                <p class="theorem-text lang" data-ru="Вертикальные углы всегда равны." data-en="Vertical angles are always equal.">Вертикальные углы всегда равны.</p>
+                <p class="theorem-text lang" data-ru="Два угла называются вертикальными, если стороны одного угла являются продолжениями сторон другого. Вертикальные углы равны." data-en="Vertical angles are pairs of angles formed by intersecting lines. Vertical angles are always equal.">Два угла называются вертикальными, если стороны одного угла являются продолжениями сторон другого. Вертикальные углы равны.</p>
                 <div class="theorem-image"><img src="img/img2.png"></div>
             </div>
             <div class="theorem-card">
-                <div class="theorem-name lang" data-ru="3. Параллельность" data-en="3. Parallelism">3. Параллельность</div>
-                <p class="theorem-text lang" data-ru="Две прямые, перпендикулярные третьей, параллельны." data-en="Two lines perpendicular to a third are parallel.">Две прямые, перпендикулярные третьей, параллельны.</p>
+                <div class="theorem-name lang" data-ru="3. Перпендикулярные прямые" data-en="3. Perpendicular Lines">3. Перпендикулярные прямые</div>
+                <p class="theorem-text lang" data-ru="Две пересекающиеся прямые называются перпендикулярными, если они образуют четыре прямых угла. Через каждую точку прямой можно провести перпендикулярную ей прямую, и только одну." data-en="Two intersecting lines are perpendicular if they form four right angles. Only one perpendicular can be drawn through a point.">Две пересекающиеся прямые называются перпендикулярными, если они образуют четыре прямых угла. Через каждую точку прямой можно провести перпендикулярную ей прямую, и только одну.</p>
                 <div class="theorem-image"><img src="img/Img3.png"></div>
             </div>
         </div>
@@ -166,50 +169,124 @@
     <section id="sec2">
         <h2 class="section-title lang" data-ru="Треугольники" data-en="Triangles">Треугольники</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="4. I признак (СУС)" data-en="4. 1st Criterion">4. I признак (СУС)</div><p class="theorem-text lang" data-ru="По двум сторонам и углу между ними." data-en="By two sides and the included angle.">По двум сторонам и углу между ними.</p><div class="theorem-image"><img src="img/img4.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="5. II признак (УСУ)" data-en="5. 2nd Criterion">5. II признак (УСУ)</div><p class="theorem-text lang" data-ru="По стороне и двум прилежащим углам." data-en="By a side and two adjacent angles.">По стороне и двум прилежащим углам.</p><div class="theorem-image"><img src="img/img5.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="6. III признак (ССС)" data-en="6. 3rd Criterion">6. III признак (ССС)</div><p class="theorem-text lang" data-ru="По трём сторонам." data-en="By three sides.">По трём сторонам.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="7. Углы в р/б △" data-en="7. Isosceles angles">7. Углы в р/б △</div><p class="theorem-text lang" data-ru="В р/б треугольнике углы при основании равны." data-en="Base angles of an isosceles triangle are equal.">В р/б треугольнике углы при основании равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="8. Биссектриса в р/б △" data-en="8. Isosceles bisector">8. Биссектриса в р/б △</div><p class="theorem-text lang" data-ru="Является медианой и высотой." data-en="Is also a median and an altitude.">Является медианой и высотой.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="9. Неравенство △" data-en="9. Triangle inequality">9. Неравенство △</div><p class="theorem-text lang" data-ru="Сторона всегда меньше суммы двух других." data-en="A side is always less than the sum of others.">Сторона всегда меньше суммы двух других.</p><div class="theorem-image"><img src="img/img9.png"></div></div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="4. I Признак равенства (СУС)" data-en="4. 1st Congruence (SAS)">4. I Признак равенства (СУС)</div>
+                <p class="theorem-text lang" data-ru="Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны." data-en="If two sides and the included angle of one triangle are equal to those of another, the triangles are congruent.">Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны.</p>
+                <div class="theorem-image"><img src="img/img4.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="5. II Признак равенства (УСУ)" data-en="5. 2nd Congruence (ASA)">5. II Признак равенства (УСУ)</div>
+                <p class="theorem-text lang" data-ru="Если сторона и два прилежащих к ней угла одного треугольника соответственно равны стороне и двум прилежащим к ней углам другого треугольника, то такие треугольники равны." data-en="If a side and two adjacent angles of one triangle are equal to those of another, the triangles are congruent.">Если сторона и два прилежащих к ней угла одного треугольника соответственно равны стороне и двум прилежащим к ней углам другого треугольника, то такие треугольники равны.</p>
+                <div class="theorem-image"><img src="img/img5.jpg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="6. III Признак равенства (ССС)" data-en="6. 3rd Congruence (SSS)">6. III Признак равенства (ССС)</div>
+                <p class="theorem-text lang" data-ru="Если три стороны одного треугольника соответственно равны трём сторонам другого треугольника, то такие треугольники равны." data-en="If three sides of one triangle are equal to three sides of another, the triangles are congruent.">Если три стороны одного треугольника соответственно равны трём сторонам другого треугольника, то такие треугольники равны.</p>
+                <div class="theorem-image"><img src="img/img6.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="7. Свойство р/б треугольника" data-en="7. Isosceles Property">7. Свойство р/б треугольника</div>
+                <p class="theorem-text lang" data-ru="В равнобедренном треугольнике углы при основании равны. Также биссектриса, проведённая к основанию, является медианой и высотой." data-en="In an isosceles triangle, base angles are equal. The bisector to the base is also the median and altitude.">В равнобедренном треугольнике углы при основании равны. Также биссектриса, проведённая к основанию, является медианой и высотой.</p>
+                <div class="theorem-image"><img src="img/img7.webp"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="8. Медиана, биссектриса, высота" data-en="8. Lines in Triangle">8. Медиана, биссектриса, высота</div>
+                <p class="theorem-text lang" data-ru="Медиана делит сторону пополам, биссектриса — угол пополам, высота — перпендикуляр к прямой, содержащей сторону." data-en="Median bisects the side, bisector bisects the angle, altitude is perpendicular to the side.">Медиана делит сторону пополам, биссектриса — угол пополам, высота — перпендикуляр к прямой, содержащей сторону.</p>
+                <div class="theorem-image"><img src="img/img8.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="9. Неравенство треугольника" data-en="9. Triangle Inequality">9. Неравенство треугольника</div>
+                <p class="theorem-text lang" data-ru="Каждая сторона треугольника меньше суммы двух других его сторон. Из этого следует, что против большей стороны лежит больший угол." data-en="Each side of a triangle is less than the sum of the other two sides. The longest side faces the largest angle.">Каждая сторона треугольника меньше суммы двух других его сторон. Из этого следует, что против большей стороны лежит больший угол.</p>
+                <div class="theorem-image"><img src="img/img9.png"></div>
+            </div>
         </div>
     </section>
 
     <section id="sec3">
-        <h2 class="section-title lang" data-ru="Параллельные" data-en="Parallels">Параллельные</h2>
+        <h2 class="section-title lang" data-ru="Параллельные прямые" data-en="Parallel Lines">Параллельные прямые</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="10. Накрест лежащие" data-en="10. Alternate angles">10. Накрест лежащие</div><p class="theorem-text lang" data-ru="Если они равны — прямые параллельны." data-en="If equal, the lines are parallel.">Если они равны — прямые параллельны.</p><div class="theorem-image"><img src="img/img10.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="11. Соответственные" data-en="11. Corresponding">11. Соответственные</div><p class="theorem-text lang" data-ru="Если они равны — прямые параллельны." data-en="If equal, the lines are parallel.">Если они равны — прямые параллельны.</p><div class="theorem-image"><img src="img/img11.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="12. Односторонние" data-en="12. Same-side int.">12. Односторонние</div><p class="theorem-text lang" data-ru="Если сумма 180° — параллельны." data-en="If sum is 180°, they are parallel.">Если сумма 180° — параллельны.</p><div class="theorem-image"><img src="img/img12.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="13. Аксиома" data-en="13. Axiom">13. Аксиома</div><p class="theorem-text lang" data-ru="Только одна параллельная через точку." data-en="Only one parallel line through a point.">Только одна параллельная через точку.</p><div class="theorem-image"><img src="img/img13.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="14. Сумма углов △" data-en="14. Sum of angles">14. Сумма углов △</div><p class="theorem-text lang" data-ru="Всегда равна 180°." data-en="Always equals 180 degrees.">Всегда равна 180°.</p><div class="theorem-image"><img src="img/img14.jpeg"></div></div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="10. Накрест лежащие углы" data-en="10. Alternate Interior">10. Накрест лежащие углы</div>
+                <p class="theorem-text lang" data-ru="Если при пересечении двух прямых секущей накрест лежащие углы равны, то прямые параллельны." data-en="If alternate interior angles are equal, then the lines are parallel.">Если при пересечении двух прямых секущей накрест лежащие углы равны, то прямые параллельны.</p>
+                <div class="theorem-image"><img src="img/img10.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="11. Соответственные углы" data-en="11. Corresponding Angles">11. Соответственные углы</div>
+                <p class="theorem-text lang" data-ru="Если при пересечении двух прямых секущей соответственные углы равны, то прямые параллельны." data-en="If corresponding angles are equal, then the lines are parallel.">Если при пересечении двух прямых секущей соответственные углы равны, то прямые параллельны.</p>
+                <div class="theorem-image"><img src="img/img11.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="12. Односторонние углы" data-en="12. Same-side Interior">12. Односторонние углы</div>
+                <p class="theorem-text lang" data-ru="Если при пересечении двух прямых секущей сумма односторонних углов равна 180°, то прямые параллельны." data-en="If the sum of same-side interior angles is 180°, then the lines are parallel.">Если при пересечении двух прямых секущей сумма односторонних углов равна 180°, то прямые параллельны.</p>
+                <div class="theorem-image"><img src="img/img12.webp"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="13. Аксиома параллельных" data-en="13. Parallel Axiom">13. Аксиома параллельных</div>
+                <p class="theorem-text lang" data-ru="Через точку, не лежащую на данной прямой, проходит только одна прямая, параллельная данной." data-en="Through a point not on a given line, only one line can be drawn parallel to it.">Через точку, не лежащую на данной прямой, проходит только одна прямая, параллельная данной.</p>
+                <div class="theorem-image"><img src="img/img13.jpg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="14. Сумма углов треугольника" data-en="14. Sum of Angles">14. Сумма углов треугольника</div>
+                <p class="theorem-text lang" data-ru="Сумма углов треугольника равна 180°. Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним." data-en="The sum of angles in a triangle is 180°. An exterior angle is the sum of two non-adjacent interior angles.">Сумма углов треугольника равна 180°. Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним.</p>
+                <div class="theorem-image"><img src="img/img14.jpeg"></div>
+            </div>
         </div>
     </section>
 
     <section id="sec4">
-        <h2 class="section-title lang" data-ru="Прямоугольные" data-en="Right Tri.">Прямоугольные</h2>
+        <h2 class="section-title lang" data-ru="Прямоугольные треугольники" data-en="Right Triangles">Прямоугольные треугольники</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="15. Сумма острых" data-en="15. Acute angles">15. Сумма острых</div><p class="theorem-text lang" data-ru="Сумма острых углов равна 90°." data-en="The sum of acute angles is 90°.">Сумма острых углов равна 90°.</p><div class="theorem-image"><img src="img/img15.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="16. Катет против 30°" data-en="16. 30° Leg rule">16. Катет против 30°</div><p class="theorem-text lang" data-ru="Равен половине гипотенузы." data-en="Equals half of the hypotenuse.">Равен половине гипотенузы.</p><div class="theorem-image"><img src="img/img16.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="17. Признак Г и К" data-en="17. Hyp and Leg">17. Признак Г и К</div><p class="theorem-text lang" data-ru="Равенство по гипотенузе и катету." data-en="Equality by hypotenuse and leg.">Равенство по гипотенузе и катету.</p><div class="theorem-image"><img src="img/img17.png"></div></div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="15. Сумма острых углов" data-en="15. Acute Angles Sum">15. Сумма острых углов</div>
+                <p class="theorem-text lang" data-ru="Сумма двух острых углов прямоугольного треугольника всегда равна 90°." data-en="The sum of the two acute angles in a right triangle is always 90°.">Сумма двух острых углов прямоугольного треугольника всегда равна 90°.</p>
+                <div class="theorem-image"><img src="img/img15.jpeg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="16. Свойство угла 30°" data-en="16. 30 Degree Property">16. Свойство угла 30°</div>
+                <p class="theorem-text lang" data-ru="Катет прямоугольного треугольника, лежащий против угла в 30°, равен половине гипотенузы." data-en="The side opposite a 30° angle in a right triangle is half the length of the hypotenuse.">Катет прямоугольного треугольника, лежащий против угла в 30°, равен половине гипотенузы.</p>
+                <div class="theorem-image"><img src="img/img16.jpeg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="17. Признаки равенства прям. △" data-en="17. Right Tri. Congruence">17. Признаки равенства прям. △</div>
+                <p class="theorem-text lang" data-ru="Равенство по двум катетам, по катету и гипотенузе, по гипотенузе и острому углу, по катету и острому углу." data-en="Congruence by two legs, leg and hypotenuse, hypotenuse and acute angle, or leg and acute angle.">Равенство по двум катетам, по катету и гипотенузе, по гипотенузе и острому углу, по катету и острому углу.</p>
+                <div class="theorem-image"><img src="img/img17.png"></div>
+            </div>
         </div>
     </section>
 
     <section id="sec5">
-        <h2 class="section-title lang" data-ru="Окружность" data-en="Circle">Окружность</h2>
+        <h2 class="section-title lang" data-ru="Окружность" data-en="The Circle">Окружность</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="18. Касательная" data-en="18. Tangent">18. Касательная</div><p class="theorem-text lang" data-ru="Перпендикулярна радиусу." data-en="Perpendicular to the radius.">Перпендикулярна радиусу.</p><div class="theorem-image"><img src="img/img18.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="19. Отрезки касательных" data-en="19. Tangent segments">19. Отрезки касательных</div><p class="theorem-text lang" data-ru="Равны, если из одной точки." data-en="Equal if from the same point.">Равны, если из одной точки.</p><div class="theorem-image"><img src="img/img19.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="20. Диаметр и хорда" data-en="20. Diameter and chord">20. Диаметр и хорда</div><p class="theorem-text lang" data-ru="Делит хорду пополам." data-en="Bisects the chord.">Делит хорду пополам.</p><div class="theorem-image"><img src="img/img20.jpeg"></div></div>
-        </div>
-    </section>
-
-    <section id="sec6">
-        <h2 class="section-title lang" data-ru="Разное" data-en="Misc">Разное</h2>
-        <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="21. Внешний угол" data-en="21. Exterior angle">21. Внешний угол</div><p class="theorem-text lang" data-ru="Равен сумме двух внутренних." data-en="Equals the sum of two interior angles.">Равен сумме двух внутренних.</p><div class="theorem-image"><img src="img/img21.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="22. Соотношение" data-en="22. Relations">22. Соотношение</div><p class="theorem-text lang" data-ru="Против большей стороны — больший угол." data-en="Greater side faces greater angle.">Против большей стороны — больший угол.</p><div class="theorem-image"><img src="img/img22.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name lang" data-ru="23. Медиана гипотенузы" data-en="23. Hyp. Median">23. Медиана гипотенузы</div><p class="theorem-text lang" data-ru="Равна половине гипотенузы." data-en="Equals half of the hypotenuse.">Равна половине гипотенузы.</p><div class="theorem-image"><img src="img/img23.jpeg"></div></div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="18. Касательная к окружности" data-en="18. Tangent to Circle">18. Касательная к окружности</div>
+                <p class="theorem-text lang" data-ru="Касательная к окружности перпендикулярна к радиусу, проведённому в точку касания." data-en="A tangent to a circle is perpendicular to the radius drawn to the point of tangency.">Касательная к окружности перпендикулярна к радиусу, проведённому в точку касания.</p>
+                <div class="theorem-image"><img src="img/img18.jpeg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="19. Отрезки касательных" data-en="19. Tangent Segments">19. Отрезки касательных</div>
+                <p class="theorem-text lang" data-ru="Отрезки касательных к окружности, проведённые из одной точки, равны и составляют равные углы с прямой, проходящей через эту точку и центр окружности." data-en="Tangent segments from a point to a circle are equal in length.">Отрезки касательных к окружности, проведённые из одной точки, равны и составляют равные углы с прямой, проходящей через эту точку и центр окружности.</p>
+                <div class="theorem-image"><img src="img/img19.jpg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="20. Свойство хорды" data-en="20. Chord Property">20. Свойство хорды</div>
+                <p class="theorem-text lang" data-ru="Диаметр, перпендикулярный к хорде, делит эту хорду пополам." data-en="A diameter that is perpendicular to a chord bisects the chord.">Диаметр, перпендикулярный к хорде, делит эту хорду пополам.</p>
+                <div class="theorem-image"><img src="img/img20.jpeg"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="21. Расстояние до прямой" data-en="21. Distance to Line">21. Расстояние до прямой</div>
+                <p class="theorem-text lang" data-ru="Длина перпендикуляра, проведённого из точки к прямой, называется расстоянием от этой точки до прямой." data-en="The length of the perpendicular from a point to a line is the distance between them.">Длина перпендикуляра, проведённого из точки к прямой, называется расстоянием от этой точки до прямой.</p>
+                <div class="theorem-image"><img src="img/img21.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="22. Построение угла" data-en="22. Angle Construction">22. Построение угла</div>
+                <p class="theorem-text lang" data-ru="Алгоритм построения угла, равного данному, с помощью циркуля и линейки." data-en="How to construct an angle equal to a given one using a compass and straightedge.">Алгоритм построения угла, равного данному, с помощью циркуля и линейки.</p>
+                <div class="theorem-image"><img src="img/img22.png"></div>
+            </div>
+            <div class="theorem-card">
+                <div class="theorem-name lang" data-ru="23. Биссектриса как ГМТ" data-en="23. Bisector as Locus">23. Биссектриса как ГМТ</div>
+                <p class="theorem-text lang" data-ru="Каждая точка биссектрисы неразвёрнутого угла равноудалена от его сторон." data-en="Every point on the bisector of an angle is equidistant from the sides of the angle.">Каждая точка биссектрисы неразвёрнутого угла равноудалена от его сторон.</p>
+                <div class="theorem-image"><img src="img/img23.jpeg"></div>
+            </div>
         </div>
     </section>
 </main>
@@ -221,28 +298,49 @@
 </footer>
 
 <script>
-    function haptic(ms = 15) { if (window.navigator.vibrate) window.navigator.vibrate(ms); }
+    // Вибрация
+    function haptic(ms = 20) { if (window.navigator.vibrate) window.navigator.vibrate(ms); }
 
+    // ЛОГИКА КАПЧИ
+    const n1 = Math.floor(Math.random() * 12) + 2;
+    const n2 = Math.floor(Math.random() * 12) + 2;
+    const result = n1 + n2;
+    document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
+
+    function checkCaptcha() {
+        const val = parseInt(document.getElementById('captcha-answer').value);
+        if (val === result) {
+            haptic(50);
+            document.getElementById('cBox').classList.add('hide');
+            setTimeout(() => {
+                document.getElementById('captcha-overlay').style.opacity = '0';
+                document.getElementById('captcha-overlay').style.pointerEvents = 'none';
+                document.body.classList.remove('no-scroll');
+            }, 500);
+        } else {
+            haptic([50, 50, 50]);
+            alert("Неверно! Попробуй еще раз.");
+            location.reload();
+        }
+    }
+
+    // ЛОГИКА ЯЗЫКА
     let currentLang = 'ru';
     function toggleLanguage() {
-        haptic(20);
+        haptic(25);
+        const btn = document.getElementById('langBtn');
+        btn.classList.add('active');
+        setTimeout(() => btn.classList.remove('active'), 600);
+
         currentLang = currentLang === 'ru' ? 'en' : 'ru';
-        document.getElementById('langBtn').innerText = currentLang === 'ru' ? 'EN' : 'RU';
+        btn.innerText = currentLang === 'ru' ? 'EN' : 'RU';
+        
         document.querySelectorAll('.lang').forEach(el => {
             el.innerHTML = el.getAttribute(`data-${currentLang}`);
         });
     }
 
-    const n1 = Math.floor(Math.random() * 10) + 1, n2 = Math.floor(Math.random() * 10) + 1, sum = n1 + n2;
-    document.getElementById('captcha-question').innerText = `${n1} + ${n2} = ?`;
-
-    function checkCaptcha() {
-        if (parseInt(document.getElementById('captcha-answer').value) === sum) {
-            document.getElementById('captcha-overlay').style.display = 'none';
-            document.body.classList.remove('no-scroll');
-        } else { location.reload(); }
-    }
-
+    // НАБЛЮДАТЕЛЬ ЗА КАРТОЧКАМИ (БАРАБАН)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -257,16 +355,23 @@
                 }
             }
         });
-    }, { threshold: 0, rootMargin: "200px 0px 200px 0px" });
+    }, { 
+        threshold: 0, 
+        rootMargin: "300px 0px 300px 0px" // Загружаем заранее, чтобы не было дырок
+    });
 
     document.querySelectorAll('.theorem-card').forEach(card => observer.observe(card));
 
+    // КНОПКА ВВЕРХ
     const btnUp = document.getElementById('btnUp');
     window.onscroll = () => {
-        if (window.pageYOffset > 500) btnUp.classList.add('show');
+        if (window.pageYOffset > 600) btnUp.classList.add('show');
         else btnUp.classList.remove('show');
     };
-    btnUp.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+    btnUp.onclick = () => {
+        haptic(30);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
 </script>
 </body>
 </html>
