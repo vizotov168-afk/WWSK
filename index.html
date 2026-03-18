@@ -39,7 +39,6 @@
         header h1 { font-weight: 900; font-size: 3rem; cursor: pointer; user-select: none; transition: 0.3s; }
         header h1:active { transform: scale(0.9); }
 
-        /* МЕНЮ: Теперь НЕ прилипает (намертво на своём месте) */
         .nav-menu { 
             background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(20px);
             padding: 1.2rem; position: relative; z-index: 1000; 
@@ -72,7 +71,7 @@
             box-shadow: 0 15px 35px rgba(31, 38, 135, 0.1);
             opacity: 0;
             transform-style: preserve-3d;
-            transform: rotateX(45deg) translateY(100px); /* Упростил для лучшей работы Intersection Observer */
+            transform: rotateX(45deg) translateY(100px);
             transition: transform 0.8s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.8s ease, background 0.3s ease;
             backface-visibility: hidden;
             cursor: pointer;
@@ -104,17 +103,87 @@
             to { text-shadow: 0 0 10px #fff, 0 0 20px #00ffff; color: #fff; }
         }
 
-        .theorem-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 2rem; opacity: 0.9; line-height: 1.4; }
+        .theorem-text { font-size: 1rem; font-weight: 600; margin-bottom: 1.2rem; opacity: 0.9; line-height: 1.6; }
         .example-box { background: rgba(74, 144, 226, 0.1); border-left: 4px solid #4a90e2; padding: 0.8rem; border-radius: 12px; font-size: 0.95rem; margin-top: 1rem; color: #0f172a; }
+
+        /* БЛОК С ФОРМУЛОЙ */
+        .formula-box {
+            background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(138, 92, 246, 0.1));
+            border: 2px solid rgba(74, 144, 226, 0.4);
+            border-radius: 16px;
+            padding: 0.9rem 1rem;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: #2563eb;
+            letter-spacing: 0.02em;
+        }
+        .formula-box::before {
+            content: '📐 Формула';
+            display: block;
+            font-size: 0.72rem;
+            font-weight: 700;
+            color: #7c3aed;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 0.4rem;
+            opacity: 0.8;
+        }
+
+        /* БЛОК С ДОКАЗАТЕЛЬСТВОМ */
+        .proof-box {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 16px;
+            overflow: hidden;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 12px rgba(31, 38, 135, 0.07);
+        }
+        .proof-box table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+        }
+        .proof-box thead tr {
+            background: linear-gradient(90deg, #4a90e2, #7c3aed);
+            color: #fff;
+        }
+        .proof-box thead th {
+            padding: 0.6rem 1rem;
+            text-align: left;
+            font-weight: 800;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+        }
+        .proof-box tbody tr {
+            border-bottom: 1px solid rgba(74, 144, 226, 0.15);
+        }
+        .proof-box tbody tr:last-child { border-bottom: none; }
+        .proof-box tbody tr:nth-child(even) { background: rgba(74, 144, 226, 0.05); }
+        .proof-box td {
+            padding: 0.55rem 1rem;
+            vertical-align: top;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+        .proof-box td:first-child {
+            font-weight: 700;
+            color: #4a90e2;
+            white-space: nowrap;
+            width: 28%;
+        }
 
         .theorem-image { 
             width: 100%; height: 200px; background: #fff; 
             border-radius: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden;
             border: 1px solid rgba(255,255,255,0.6);
+            margin-top: 1rem;
         }
         .theorem-image img { max-width: 90%; max-height: 90%; object-fit: contain; pointer-events: none; }
 
-        /* Кнопка НАВЕРХ в стиле LIQUID GLASS */
+        /* Кнопка НАВЕРХ */
         .btn-up {
             position: fixed; bottom: 30px; right: 30px; width: 65px; height: 65px;
             background: rgba(255, 255, 255, 0.2); 
@@ -173,64 +242,480 @@
 </nav>
 
 <main class="container">
+
+    <!-- ===== УГЛЫ ===== -->
     <section id="sec1">
         <h2 class="section-title">Углы</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">1. Смежные углы</div><p class="theorem-text"><strong>Теорема:</strong> Сумма смежных углов равна 180°.</p><div class="example-box">∠1 + ∠2 = 180°</div><div class="theorem-image"><img src="img/img1.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">2. Вертикальные углы</div><p class="theorem-text"><strong>Теорема:</strong> Вертикальные углы всегда равны.</p><div class="theorem-image"><img src="img/img2.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">3. Перпендикулярные</div><p class="theorem-text"><strong>Теорема:</strong> Две прямые, перпендикулярные третьей, параллельны.</p><div class="theorem-image"><img src="img/Img3.png"></div></div>
+
+            <!-- 1 -->
+            <div class="theorem-card">
+                <div class="theorem-name">1. Смежные углы</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Два угла называются смежными, если у них общая вершина и одна общая сторона, а две другие стороны являются продолжением друг друга. Такие углы всегда дополняют друг друга до развёрнутого угла, поэтому их сумма равна 180°.</p>
+                <div class="formula-box">∠1 + ∠2 = 180°</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>Луч OC делит развёрнутый угол AOB на ∠AOC и ∠COB</td></tr>
+                            <tr><td>Факт</td><td>Развёрнутый угол AOB = 180°</td></tr>
+                            <tr><td>Вывод</td><td>∠AOC + ∠COB = 180° ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img1.jpeg"></div>
+            </div>
+
+            <!-- 2 -->
+            <div class="theorem-card">
+                <div class="theorem-name">2. Вертикальные углы</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Два угла называются вертикальными, если стороны одного являются продолжением сторон другого. При пересечении двух прямых образуются две пары вертикальных углов, и каждая пара обязательно равна между собой.</p>
+                <div class="formula-box">∠1 = ∠3,&nbsp;&nbsp;∠2 = ∠4</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>∠1 и ∠2 — смежные, ∠3 и ∠2 — смежные</td></tr>
+                            <tr><td>Шаг 1</td><td>∠1 + ∠2 = 180° и ∠3 + ∠2 = 180°</td></tr>
+                            <tr><td>Вывод</td><td>∠1 = 180° − ∠2 = ∠3 ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img2.png"></div>
+            </div>
+
+            <!-- 3 -->
+            <div class="theorem-card">
+                <div class="theorem-name">3. Перпендикулярные</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Если две прямые перпендикулярны одной и той же третьей прямой (секущей), то они параллельны между собой. Это следует из того, что все соответственные углы при таком пересечении равны 90°.</p>
+                <div class="formula-box">a ⊥ c, b ⊥ c &nbsp;⟹&nbsp; a ∥ b</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>a ⊥ c и b ⊥ c</td></tr>
+                            <tr><td>Шаг 1</td><td>Соответственные углы при a и c: 90°; при b и c: 90°</td></tr>
+                            <tr><td>Вывод</td><td>Равные соответственные углы — признак параллельности ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/Img3.png"></div>
+            </div>
+
         </div>
     </section>
 
+    <!-- ===== ТРЕУГОЛЬНИКИ ===== -->
     <section id="sec2">
         <h2 class="section-title">Треугольники</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">4. I признак (СУС)</div><p class="theorem-text"><strong>Теорема:</strong> Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img4.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">5. II признак (УСУ)</div><p class="theorem-text"><strong>Теорема:</strong> Если сторона и два прилежащих к ней угла одного треугольника соответственно равны стороне и двум прилежащим углам другого треугольника, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img5.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">6. III признак (ССС)</div><p class="theorem-text"><strong>Теорема:</strong> Если три стороны одного треугольника соответственно равны трём сторонам другого треугольника, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img6.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">7. Углы в р/б △</div><p class="theorem-text"><strong>Свойство:</strong> В равнобедренном треугольнике углы при основании равны.</p><div class="theorem-image"><img src="img/img7.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name">8. Биссектриса в р/б △</div><p class="theorem-text"><strong>Теорема:</strong> В равнобедренном треугольнике медиана, проведённая к основанию, является биссектрисой и высотой.</p><div class="theorem-image"><img src="img/img8.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">9. Неравенство △</div><p class="theorem-text"><strong>Теорема:</strong> Каждая сторона треугольника меньше суммы двух других сторон.</p><div class="example-box">a < b + c</div><div class="theorem-image"><img src="img/img9.png"></div></div>
+
+            <!-- 4 -->
+            <div class="theorem-card">
+                <div class="theorem-name">4. I признак (СУС)</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Если две стороны и угол между ними одного треугольника соответственно равны двум сторонам и углу между ними другого треугольника, то такие треугольники конгруэнтны, то есть полностью совпадают при наложении.</p>
+                <div class="formula-box">AB = A₁B₁, ∠B = ∠B₁, BC = B₁C₁ ⟹ △ABC = △A₁B₁C₁</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>AB = A₁B₁, ∠B = ∠B₁, BC = B₁C₁</td></tr>
+                            <tr><td>Шаг 1</td><td>Наложим △A₁B₁C₁ на △ABC, совместив B и B₁</td></tr>
+                            <tr><td>Шаг 2</td><td>Т.к. равны стороны и угол — вершины A и C совпадут</td></tr>
+                            <tr><td>Вывод</td><td>Треугольники полностью совпали ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img4.png"></div>
+            </div>
+
+            <!-- 5 -->
+            <div class="theorem-card">
+                <div class="theorem-name">5. II признак (УСУ)</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Если сторона и два угла, прилежащих к ней, одного треугольника соответственно равны стороне и двум прилежащим углам другого треугольника, то такие треугольники равны.</p>
+                <div class="formula-box">∠A = ∠A₁, AB = A₁B₁, ∠B = ∠B₁ ⟹ △ABC = △A₁B₁C₁</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>∠A = ∠A₁, AB = A₁B₁, ∠B = ∠B₁</td></tr>
+                            <tr><td>Шаг 1</td><td>Совместим стороны AB и A₁B₁</td></tr>
+                            <tr><td>Шаг 2</td><td>Лучи из A и B идут под равными углами — пересекутся в одной точке C = C₁</td></tr>
+                            <tr><td>Вывод</td><td>Треугольники совпали ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img5.jpg"></div>
+            </div>
+
+            <!-- 6 -->
+            <div class="theorem-card">
+                <div class="theorem-name">6. III признак (ССС)</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Если все три стороны одного треугольника соответственно равны трём сторонам другого треугольника, то такие треугольники равны. Форма треугольника полностью определяется его сторонами.</p>
+                <div class="formula-box">AB = A₁B₁, BC = B₁C₁, AC = A₁C₁ ⟹ △ABC = △A₁B₁C₁</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>Все три стороны попарно равны</td></tr>
+                            <tr><td>Шаг 1</td><td>Совместим сторону BC = B₁C₁</td></tr>
+                            <tr><td>Шаг 2</td><td>Из двух условий равенства радиусов вершина A совпадёт с A₁</td></tr>
+                            <tr><td>Вывод</td><td>Треугольники совпали ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img6.png"></div>
+            </div>
+
+            <!-- 7 -->
+            <div class="theorem-card">
+                <div class="theorem-name">7. Углы в р/б △</div>
+                <p class="theorem-text"><strong>Свойство:</strong> В равнобедренном треугольнике углы при основании равны. Это означает, что если два боковых ребра треугольника равны, то и углы, лежащие напротив этих рёбер, тоже равны.</p>
+                <div class="formula-box">AB = AC &nbsp;⟹&nbsp; ∠B = ∠C</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, AB = AC</td></tr>
+                            <tr><td>Шаг 1</td><td>Проведём биссектрису AM из вершины A</td></tr>
+                            <tr><td>Шаг 2</td><td>По признаку СУС: △ABM = △ACM</td></tr>
+                            <tr><td>Вывод</td><td>∠B = ∠C ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img7.webp"></div>
+            </div>
+
+            <!-- 8 -->
+            <div class="theorem-card">
+                <div class="theorem-name">8. Биссектриса в р/б △</div>
+                <p class="theorem-text"><strong>Теорема:</strong> В равнобедренном треугольнике медиана, проведённая к основанию, одновременно является биссектрисой угла при вершине и высотой треугольника. Все три линии совпадают.</p>
+                <div class="formula-box">медиана = биссектриса = высота к основанию</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, AB = AC, M — середина BC</td></tr>
+                            <tr><td>Шаг 1</td><td>По признаку ССС: △ABM = △ACM</td></tr>
+                            <tr><td>Шаг 2</td><td>∠BAM = ∠CAM → AM — биссектриса</td></tr>
+                            <tr><td>Вывод</td><td>∠AMB = ∠AMC = 90° → AM — высота ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img8.png"></div>
+            </div>
+
+            <!-- 9 -->
+            <div class="theorem-card">
+                <div class="theorem-name">9. Неравенство △</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Каждая сторона треугольника строго меньше суммы двух других его сторон. Это ключевое условие существования треугольника: если оно нарушается хотя бы для одной стороны, треугольник построить невозможно.</p>
+                <div class="formula-box">a &lt; b + c,&nbsp; b &lt; a + c,&nbsp; c &lt; a + b</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC со сторонами a, b, c</td></tr>
+                            <tr><td>Шаг 1</td><td>Продолжим AC за A на отрезок AD = AB</td></tr>
+                            <tr><td>Шаг 2</td><td>DC = AB + AC = c + b; в △DBC: BC &lt; DC</td></tr>
+                            <tr><td>Вывод</td><td>a &lt; b + c ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img9.png"></div>
+            </div>
+
         </div>
     </section>
 
+    <!-- ===== ПАРАЛЛЕЛЬНЫЕ ПРЯМЫЕ ===== -->
     <section id="sec3">
         <h2 class="section-title">Параллельные прямые</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">10. Накрест лежащие</div><p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей накрест лежащие углы равны, то прямые параллельны.</p><div class="theorem-image"><img src="img/img10.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">11. Соответственные</div><p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей соответственные углы равны, то прямые параллельны.</p><div class="theorem-image"><img src="img/img11.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">12. Односторонние</div><p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей сумма односторонних углов равна 180°, то прямые параллельны.</p><div class="theorem-image"><img src="img/img12.webp"></div></div>
-            <div class="theorem-card"><div class="theorem-name">13. Аксиома</div><p class="theorem-text"><strong>Аксиома:</strong> Через точку, не лежащую на данной прямой, проходит только одна прямая, параллельная данной.</p><div class="theorem-image"><img src="img/img13.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">14. Сумма углов △</div><p class="theorem-text"><strong>Теорема:</strong> Сумма углов любого треугольника всегда равна 180°.</p><div class="theorem-image"><img src="img/img14.jpeg"></div></div>
+
+            <!-- 10 -->
+            <div class="theorem-card">
+                <div class="theorem-name">10. Накрест лежащие</div>
+                <p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей накрест лежащие углы равны, то прямые параллельны. Накрест лежащие углы находятся по разные стороны от секущей и между прямыми.</p>
+                <div class="formula-box">∠3 = ∠6 &nbsp;⟹&nbsp; a ∥ b</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>∠3 = ∠6 (накрест лежащие)</td></tr>
+                            <tr><td>Шаг 1</td><td>∠3 = ∠5 (вертикальные) → ∠5 = ∠6</td></tr>
+                            <tr><td>Вывод</td><td>∠5 = ∠6 — соответственные равны → a ∥ b ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img10.png"></div>
+            </div>
+
+            <!-- 11 -->
+            <div class="theorem-card">
+                <div class="theorem-name">11. Соответственные</div>
+                <p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей соответственные углы равны, то прямые параллельны. Соответственные углы занимают одинаковое положение относительно каждой из двух прямых и секущей.</p>
+                <div class="formula-box">∠1 = ∠5 &nbsp;⟹&nbsp; a ∥ b</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>∠1 = ∠5 (соответственные)</td></tr>
+                            <tr><td>Шаг 1</td><td>Прямые одинаково наклонены к секущей</td></tr>
+                            <tr><td>Вывод</td><td>Не пересекаются → параллельны ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img11.png"></div>
+            </div>
+
+            <!-- 12 -->
+            <div class="theorem-card">
+                <div class="theorem-name">12. Односторонние</div>
+                <p class="theorem-text"><strong>Признак:</strong> Если при пересечении двух прямых секущей сумма односторонних (внутренних) углов равна 180°, то прямые параллельны. Односторонние углы лежат по одну сторону от секущей.</p>
+                <div class="formula-box">∠4 + ∠6 = 180° &nbsp;⟹&nbsp; a ∥ b</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>∠4 + ∠6 = 180°</td></tr>
+                            <tr><td>Шаг 1</td><td>∠3 + ∠4 = 180° → ∠3 = ∠6 (накрест лежащие равны)</td></tr>
+                            <tr><td>Вывод</td><td>По признаку накрест лежащих: a ∥ b ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img12.webp"></div>
+            </div>
+
+            <!-- 13 -->
+            <div class="theorem-card">
+                <div class="theorem-name">13. Аксиома</div>
+                <p class="theorem-text"><strong>Аксиома параллельных прямых:</strong> Через точку, не лежащую на данной прямой, проходит одна и только одна прямая, параллельная данной. Это фундамент евклидовой геометрии, принимаемый без доказательства.</p>
+                <div class="formula-box">∃! b : b ∥ a &nbsp;и&nbsp; P ∈ b</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Статус</td><td>Аксиома — принимается без доказательства</td></tr>
+                            <tr><td>Значение</td><td>Основа всей евклидовой геометрии</td></tr>
+                            <tr><td>Следствие</td><td>В неевклидовых геометриях эта аксиома нарушается</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img13.jpg"></div>
+            </div>
+
+            <!-- 14 -->
+            <div class="theorem-card">
+                <div class="theorem-name">14. Сумма углов △</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Сумма внутренних углов любого треугольника равна 180°. Это одно из фундаментальных свойств евклидовой геометрии, из которого вытекает множество других теорем.</p>
+                <div class="formula-box">∠A + ∠B + ∠C = 180°</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC</td></tr>
+                            <tr><td>Шаг 1</td><td>Через B проведём прямую DE ∥ AC</td></tr>
+                            <tr><td>Шаг 2</td><td>∠ABD = ∠A (накрест), ∠CBE = ∠C (накрест)</td></tr>
+                            <tr><td>Вывод</td><td>∠A + ∠B + ∠C = 180° (развёрнутый угол) ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img14.jpeg"></div>
+            </div>
+
         </div>
     </section>
 
+    <!-- ===== ПРЯМОУГОЛЬНЫЕ △ ===== -->
     <section id="sec4">
         <h2 class="section-title">Прямоугольные △</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">15. Сумма острых</div><p class="theorem-text"><strong>Теорема:</strong> Сумма острых углов прямоугольного треугольника равна 90°.</p><div class="theorem-image"><img src="img/img15.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">16. Катет против 30°</div><p class="theorem-text"><strong>Теорема:</strong> Катет прямоугольного треугольника, лежащий против угла в 30°, равен половине гипотенузы.</p><div class="theorem-image"><img src="img/img16.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">17. Признак Г и К</div><p class="theorem-text"><strong>Признак:</strong> Если гипотенуза и катет одного прямоугольного треугольника соответственно равны гипотенузе и катету другого, то такие треугольники равны.</p><div class="theorem-image"><img src="img/img17.png"></div></div>
+
+            <!-- 15 -->
+            <div class="theorem-card">
+                <div class="theorem-name">15. Сумма острых</div>
+                <p class="theorem-text"><strong>Теорема:</strong> В прямоугольном треугольнике сумма двух острых углов равна 90°. Это непосредственно следует из теоремы о сумме углов треугольника, поскольку один из углов уже равен 90°.</p>
+                <div class="formula-box">∠A + ∠B = 90°&nbsp; (при ∠C = 90°)</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, ∠C = 90°</td></tr>
+                            <tr><td>Шаг 1</td><td>∠A + ∠B + ∠C = 180° (сумма углов △)</td></tr>
+                            <tr><td>Вывод</td><td>∠A + ∠B = 180° − 90° = 90° ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img15.jpeg"></div>
+            </div>
+
+            <!-- 16 -->
+            <div class="theorem-card">
+                <div class="theorem-name">16. Катет против 30°</div>
+                <p class="theorem-text"><strong>Теорема:</strong> В прямоугольном треугольнике катет, лежащий напротив угла в 30°, равен половине гипотенузы. Это частный, но очень удобный случай для вычислений в задачах.</p>
+                <div class="formula-box">∠A = 30° &nbsp;⟹&nbsp; BC = AC / 2</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, ∠C = 90°, ∠A = 30°</td></tr>
+                            <tr><td>Шаг 1</td><td>Отразим △ABC относительно BC — получим равносторонний △</td></tr>
+                            <tr><td>Шаг 2</td><td>Все стороны равностороннего △ равны AB</td></tr>
+                            <tr><td>Вывод</td><td>BC = AB/2 = гипотенуза/2 ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img16.jpeg"></div>
+            </div>
+
+            <!-- 17 -->
+            <div class="theorem-card">
+                <div class="theorem-name">17. Признак Г и К</div>
+                <p class="theorem-text"><strong>Признак равенства прямоугольных треугольников:</strong> Если гипотенуза и катет одного прямоугольного треугольника соответственно равны гипотенузе и катету другого, то такие треугольники равны.</p>
+                <div class="formula-box">гип₁ = гип₂,&nbsp; кат₁ = кат₂ &nbsp;⟹&nbsp; △ = △</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>Равные гипотенузы и по одному катету</td></tr>
+                            <tr><td>Шаг 1</td><td>По т. Пифагора найдём второй катет: он тоже равен</td></tr>
+                            <tr><td>Вывод</td><td>Три стороны равны → по признаку ССС △ = △ ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img17.png"></div>
+            </div>
+
         </div>
     </section>
 
+    <!-- ===== ОКРУЖНОСТЬ ===== -->
     <section id="sec5">
         <h2 class="section-title">Окружность</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">18. Касательная</div><p class="theorem-text"><strong>Теорема:</strong> Касательная к окружности перпендикулярна радиусу, проведённому в точку касания.</p><div class="theorem-image"><img src="img/img18.jpeg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">19. Отрезки касательных</div><p class="theorem-text"><strong>Теорема:</strong> Отрезки касательных к окружности, проведённые из одной точки, равны.</p><div class="theorem-image"><img src="img/img19.jpg"></div></div>
-            <div class="theorem-card"><div class="theorem-name">20. Диаметр и хорда</div><p class="theorem-text"><strong>Теорема:</strong> Диаметр, перпендикулярный к хорде, делит эту хорду пополам.</p><div class="theorem-image"><img src="img/img20.jpeg"></div></div>
+
+            <!-- 18 -->
+            <div class="theorem-card">
+                <div class="theorem-name">18. Касательная</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Касательная к окружности, проведённая в некоторую точку окружности, перпендикулярна радиусу, проведённому в эту же точку касания. Обратное тоже верно.</p>
+                <div class="formula-box">OA ⊥ l &nbsp;(O — центр, A — точка касания)</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>Прямая l касается окружности в точке A</td></tr>
+                            <tr><td>Шаг 1</td><td>Любая точка l кроме A лежит вне окружности → дальше от O</td></tr>
+                            <tr><td>Вывод</td><td>OA — наикратчайшее расстояние от O до l → OA ⊥ l ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img18.jpeg"></div>
+            </div>
+
+            <!-- 19 -->
+            <div class="theorem-card">
+                <div class="theorem-name">19. Отрезки касательных</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Два отрезка касательных, проведённых к окружности из одной внешней точки, равны между собой. Кроме того, эта точка лежит на биссектрисе угла, образованного касательными.</p>
+                <div class="formula-box">PA = PB &nbsp;(P — внешняя точка)</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>PA и PB — касательные, O — центр</td></tr>
+                            <tr><td>Шаг 1</td><td>OA = OB (радиусы), OA ⊥ PA, OB ⊥ PB, OP — общая</td></tr>
+                            <tr><td>Вывод</td><td>По признаку Г и К: △OAP = △OBP → PA = PB ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img19.jpg"></div>
+            </div>
+
+            <!-- 20 -->
+            <div class="theorem-card">
+                <div class="theorem-name">20. Диаметр и хорда</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Диаметр окружности, перпендикулярный хорде, делит эту хорду пополам. Обратно: если диаметр делит хорду пополам, то он перпендикулярен ей (если только хорда не является самим диаметром).</p>
+                <div class="formula-box">CD ⊥ AB &nbsp;⟹&nbsp; AM = MB</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>Диаметр CD ⊥ хорде AB, M — пересечение</td></tr>
+                            <tr><td>Шаг 1</td><td>OA = OB (радиусы), OM — общий, ∠OMA = ∠OMB = 90°</td></tr>
+                            <tr><td>Вывод</td><td>По признаку Г и К: △OMA = △OMB → AM = BM ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img20.jpeg"></div>
+            </div>
+
         </div>
     </section>
 
+    <!-- ===== РАЗНОЕ ===== -->
     <section id="sec6">
         <h2 class="section-title">Разное</h2>
         <div class="theorems-grid">
-            <div class="theorem-card"><div class="theorem-name">21. Внешний угол</div><p class="theorem-text"><strong>Теорема:</strong> Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним.</p><div class="theorem-image"><img src="img/img21.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">22. Соотношение</div><p class="theorem-text"><strong>Теорема:</strong> В треугольнике против большей стороны лежит больший угол, и обратно.</p><div class="theorem-image"><img src="img/img22.png"></div></div>
-            <div class="theorem-card"><div class="theorem-name">23. Медиана гипотенузы</div><p class="theorem-text"><strong>Теорема:</strong> В прямоугольном треугольнике медиана, проведённая к гипотенузе, равна её половине.</p><div class="theorem-image"><img src="img/img23.jpeg"></div></div>
+
+            <!-- 21 -->
+            <div class="theorem-card">
+                <div class="theorem-name">21. Внешний угол</div>
+                <p class="theorem-text"><strong>Теорема:</strong> Внешний угол треугольника равен сумме двух внутренних углов, не смежных с ним. Из этого немедленно следует, что внешний угол всегда больше каждого из несмежных внутренних углов.</p>
+                <div class="formula-box">∠ACD = ∠A + ∠B</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, ∠ACD — внешний угол при вершине C</td></tr>
+                            <tr><td>Шаг 1</td><td>∠ACB + ∠ACD = 180° (смежные)</td></tr>
+                            <tr><td>Шаг 2</td><td>∠A + ∠B + ∠ACB = 180° (сумма углов △)</td></tr>
+                            <tr><td>Вывод</td><td>∠ACD = ∠A + ∠B ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img21.png"></div>
+            </div>
+
+            <!-- 22 -->
+            <div class="theorem-card">
+                <div class="theorem-name">22. Соотношение</div>
+                <p class="theorem-text"><strong>Теорема:</strong> В треугольнике против большей стороны лежит больший угол, и обратно — против большего угла лежит большая сторона. Это позволяет сравнивать стороны и углы без вычислений.</p>
+                <div class="formula-box">a &gt; b &nbsp;⟺&nbsp; ∠A &gt; ∠B</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, пусть BC &gt; AC</td></tr>
+                            <tr><td>Шаг 1</td><td>Отложим на BC отрезок BD = AC, рассмотрим △ABD</td></tr>
+                            <tr><td>Шаг 2</td><td>∠DAB = ∠ADB &gt; ∠ACB (внешний угол)</td></tr>
+                            <tr><td>Вывод</td><td>∠ABC &gt; ∠DAB = ∠ACB → ∠B &gt; ∠A ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img22.png"></div>
+            </div>
+
+            <!-- 23 -->
+            <div class="theorem-card">
+                <div class="theorem-name">23. Медиана гипотенузы</div>
+                <p class="theorem-text"><strong>Теорема:</strong> В прямоугольном треугольнике медиана, проведённая к гипотенузе, равна половине гипотенузы. Это означает, что середина гипотенузы является центром описанной окружности.</p>
+                <div class="formula-box">MC = MA = MB = AB / 2</div>
+                <div class="proof-box">
+                    <table>
+                        <thead><tr><th>Шаг</th><th>Утверждение</th></tr></thead>
+                        <tbody>
+                            <tr><td>Дано</td><td>△ABC, ∠C = 90°, M — середина гипотенузы AB</td></tr>
+                            <tr><td>Шаг 1</td><td>Опишем △ в полуокружность с диаметром AB</td></tr>
+                            <tr><td>Шаг 2</td><td>Центр окружности — точка M, радиус R = AB/2</td></tr>
+                            <tr><td>Вывод</td><td>MA = MB = MC = AB/2 ∎</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="theorem-image"><img src="img/img23.jpeg"></div>
+            </div>
+
         </div>
     </section>
+
 </main>
 
 <div id="btnUp" class="btn-up">↑</div>
@@ -260,7 +745,6 @@
         }
     }
 
-    // АНИМАЦИЯ: Сделал так, чтобы срабатывала раньше (rootMargin)
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -274,10 +758,8 @@
         card.addEventListener('click', () => haptic(15));
     });
 
-    // КНОПКА НАВЕРХ: Логика появления
     const btnUp = document.getElementById('btnUp');
     window.onscroll = function() {
-        // Появляется на середине высоты контента
         if (window.pageYOffset > (document.documentElement.scrollHeight / 3)) {
             btnUp.classList.add('show');
         } else {
